@@ -11,7 +11,7 @@
     $action     = 'login';
   }
 
-  if($controller == 'Account' && $action == 'login')
+  if($controller == 'Account' && ($action == 'login' || $action == 'logout' || $action == 'remember'))
   {
     require_once('views/layoutLogin.php');
   }

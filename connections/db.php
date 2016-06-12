@@ -1,49 +1,26 @@
 <?php
-
-/**
- * Created by PhpStorm.
- * User: alexj
- * Date: 25-03-2016
- * Time: 21:39
- * @property  _instance
- * @property DataBase _instance
- */
-
-Class DataBase
+class Database
 {
-    private $servidor='localhost';
-    private $usuario='root';
-    private $password='';
-    private $base_datos='balmetal_app';
-    private $link;
-    private $resultado;
-    private $array;
-    static $_instance;
+    private static $dbName = 'balmetal_app';
+    private static $dbHost = 'localhost';
+    private static $dbUsername = 'root';
+    private static $dbUserPassword = '';
 
-    /*La función construct es privada para evitar que el objeto pueda ser creado mediante new*/
-    private function __construct(){
-        $this->conectar();
+    private static $cont = null;
+
+    public function __construct() {
+        die('Init function is not allowed');
     }
 
-    /*Evitamos el clonaje del objeto. Patrón Singleton*/
-    private function __clone(){ }
-
-    /*Función encargada de crear, si es necesario, el objeto. Esta es la función que debemos llamar desde fuera de la clase para instanciar el objeto, y así, poder utilizar sus métodos*/
-    /**
-     * @return DataBase
-     */
-    public static function getInstance(){
-        if (!(self::$_instance instanceof self)){
-            self::$_instance = new self();
+    public static function connect() {
+        if (null === self::$cont) {
+            try {
+                self::$cont =  new PDO('mysql:host='.self::$dbHost.'; dbname='.self::$dbName, self::$dbUsername, self::$dbUserPassword);
+            } catch(PDOException $e) {
+                die($e->getMessage());
+            }
         }
-        return self::$_instance;
-    }
-
-    /*Realiza la conexión a la base de datos.*/
-    private function conectar(){
-        $this->link = mysqli_connect($this->servidor, $this->usuario, $this->password);
-        mysqli_select_db($this->link, $this->base_datos);
-        @mysqli_query("SET NAMES 'utf8'");
+        return self::$cont;
     }
 
     /*Método para ejecutar una sentencia sql*/
@@ -63,19 +40,12 @@ Class DataBase
         return $this->array;
     }
 
-    //Devuelve el último id del insert introducido
-    public function lastID(){
-        return mysqli_insert_id($this->link);
-    }
-
-    function desconectar($conexion)
-    {
-        mysqli_close($conexion);
-    }
-
-
     function obtener_resultados($resultado)
     {
         return mysqli_fetch_array($resultado, MYSQL_ASSOC);
+    }
+
+    public static function disconnect() {
+        self::$cont = null;
     }
 }

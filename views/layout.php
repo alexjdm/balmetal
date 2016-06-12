@@ -5,7 +5,7 @@
  * Date: 26-03-2016
  * Time: 0:51
  */
-$titulo = 'BalMetal';
+$titulo = 'FxLogos';
 
 ?>
 
@@ -16,6 +16,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
     <?php require_once('header.php'); ?>
+
+    <div class="modal fade" id="modalPrincipal"></div>
+    <div class="modal fade" id="modalConfirmacion"></div>
+    <div class="modal fade" id="modalSubmodal"></div>
 
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -30,23 +34,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <?php require_once('footer.php'); ?>
 
-            <?php require_once('control-sidebar.php'); ?>
+            <?php //require_once('control-sidebar.php'); ?>
 
         </div>
-
-        <!-- REQUIRED JS SCRIPTS -->
-
-        <!-- jQuery 2.1.4 -->
-        <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-        <!-- Bootstrap 3.3.5 -->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/app.min.js"></script>
-
-        <!-- Optionally, you can add Slimscroll and FastClick plugins.
-             Both of these plugins are recommended to enhance the
-             user experience. Slimscroll is required when using the
-             fixed layout. -->
 
     </body>
 

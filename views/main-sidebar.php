@@ -40,8 +40,72 @@
         <ul class="sidebar-menu">
             <li class="header">MENÚ</li>
             <!-- Optionally, you can add icons to the links -->
-            <li class="active"><a href="index.php"><i class="fa fa-link"></i> <span>Inicio</span></a></li>
-            <li class="treeview">
+            <li class="<?php if($controller=='Home'){ echo 'active'; } ?>"><a href="index.php?controller=Home&action=index"><i class="fa fa-area-chart"></i> <span>Inicio</span></a></li>
+
+            <li class="treeview <?php if($controller=='Certificados'){ echo 'active'; } ?>">
+                <a href="#">
+                    <i class="fa fa-file-text-o"></i> <span>Certificados</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu <?php if($controller=='Certificados'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Certificados'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <?php $asignacion = ($action=='asignacionBarras' || $action=='asignacionLunetas' || $action=='asignacionParachoques' || $action=='asignacionCunas'); ?>
+                    <li class="<?php if($asignacion){ echo 'active'; } ?>">
+                        <a href="#"><i class="fa fa-circle-o"></i> Asignación <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu <?php if($asignacion){ echo 'menu-open'; } ?>" style="display: <?php if($asignacion){ echo 'block'; } else { echo 'none'; } ?>;">
+                            <li class="<?php if($action=='asignacionBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=asignacionBarras"><i class="fa fa-circle-o"></i> Barras</a></li>
+                            <li class="<?php if($action=='asignacionLunetas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=asignacionLunetas"><i class="fa fa-circle-o"></i> Lunetas</a></li>
+                            <li class="<?php if($action=='asignacionParachoques'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=asignacionParachoques"><i class="fa fa-circle-o"></i> Para Choques</a></li>
+                            <li class="<?php if($action=='asignacionCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=asignacionCunas"><i class="fa fa-circle-o"></i> Cuñas</a></li>
+                        </ul>
+                    </li>
+
+                    <?php $reAsignacion = ($action=='reAsignacionBarras' || $action=='reAsignacionLunetas' || $action=='reAsignacionParachoques' || $action=='reAsignacionCunas'); ?>
+                    <li class="<?php if($reAsignacion){ echo 'active'; } ?>">
+                        <a href="#"><i class="fa fa-circle-o"></i> Re Asignación <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu <?php if($reAsignacion){ echo 'menu-open'; } ?>" style="display: <?php if($reAsignacion){ echo 'block'; } else { echo 'none'; } ?>;">
+                            <li class="<?php if($action=='reAsignacionBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=reAsignacionBarras"><i class="fa fa-circle-o"></i> Barras</a></li>
+                            <li class="<?php if($action=='reAsignacionLunetas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=reAsignacionLunetas"><i class="fa fa-circle-o"></i> Lunetas</a></li>
+                            <li class="<?php if($action=='reAsignacionParachoques'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=reAsignacionParachoques"><i class="fa fa-circle-o"></i> Para Choques</a></li>
+                            <li class="<?php if($action=='reAsignacionCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=reAsignacionCunas"><i class="fa fa-circle-o"></i> Cuñas</a></li>
+                        </ul>
+                    </li>
+
+                    <?php $sellos = ($action=='sellosBarras' || $action=='sellosLunetas' || $action=='sellosParachoques' || $action=='sellosCunas'); ?>
+                    <li class="<?php if($sellos){ echo 'active'; } ?>">
+                        <a href="#"><i class="fa fa-circle-o"></i> Sellos <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu <?php if($sellos){ echo 'menu-open'; } ?>" style="display: <?php if($sellos){ echo 'block'; } else { echo 'none'; } ?>;">
+                            <li class="<?php if($action=='sellosBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=sellosBarras"><i class="fa fa-circle-o"></i> Barras</a></li>
+                            <li class="<?php if($action=='sellosLunetas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=sellosLunetas"><i class="fa fa-circle-o"></i> Lunetas</a></li>
+                            <li class="<?php if($action=='sellosParachoques'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=sellosParachoques"><i class="fa fa-circle-o"></i> Para Choques</a></li>
+                            <li class="<?php if($action=='sellosCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=sellosCunas"><i class="fa fa-circle-o"></i> Cuñas</a></li>
+                        </ul>
+                    </li>
+
+                    <?php $certificados = ($action=='certificadosBarras' || $action=='certificadosLunetas' || $action=='certificadosParachoques' || $action=='certificadosCunas' || $action=='certificadosBarrasEspecial'); ?>
+                    <li class="<?php if($certificados){ echo 'active'; } ?>">
+                        <a href="#"><i class="fa fa-circle-o"></i> Certificados <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu <?php if($certificados){ echo 'menu-open'; } ?>" style="display: <?php if($certificados){ echo 'block'; } else { echo 'none'; } ?>;">
+                            <li class="<?php if($action=='certificadosBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificadosBarras"><i class="fa fa-circle-o"></i> Barras</a></li>
+                            <li class="<?php if($action=='certificadosLunetas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificadosLunetas"><i class="fa fa-circle-o"></i> Lunetas</a></li>
+                            <li class="<?php if($action=='certificadosParachoques'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificadosParachoques"><i class="fa fa-circle-o"></i> Para Choques</a></li>
+                            <li class="<?php if($action=='certificadosCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificadosCunas"><i class="fa fa-circle-o"></i> Cuñas</a></li>
+                            <li class="<?php if($action=='certificadosBarrasEspecial'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificadosBarrasEspecial"><i class="fa fa-circle-o"></i> Barras Especial</a></li>
+                        </ul>
+                    </li>
+
+                    <?php $anulacion = ($action=='anulacionFolioBarras'); ?>
+                    <li class="<?php if($anulacion){ echo 'active'; } ?>">
+                        <a href="#"><i class="fa fa-circle-o"></i> Anulación Certificados <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu <?php if($anulacion){ echo 'menu-open'; } ?>" style="display: <?php if($anulacion){ echo 'block'; } else { echo 'none'; } ?>;">
+                            <li class="<?php if($action=='anulacionFolioBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=anulacionFolioBarras"><i class="fa fa-circle-o"></i> Folio Barras</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="<?php if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?>"><a href="#"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>
+                </ul>
+            </li>
+
+            <!--<li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Datos Comerciales</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">
                     <li><a href="index.php?controller=Proveedores&action=index">Proveedores</a></li>
@@ -54,15 +118,7 @@
                     <li><a href="#">Articulos</a></li>
                     <li><a href="#">Articulos Sellos</a></li>
                 </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-            <li class="treeview">
-                <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-                <ul class="treeview-menu">
-                    <li><a href="#">Link in level 2</a></li>
-                    <li><a href="#">Link in level 2</a></li>
-                </ul>
-            </li>
+            </li>-->
         </ul><!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
