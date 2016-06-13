@@ -11,6 +11,12 @@ function call($controller, $action) {
         case 'Home':
             $controller = new HomeController();
             break;
+        case 'Productos':
+            $controller = new ProductosController();
+            break;
+        case 'Certificados':
+            $controller = new CertificadosController();
+            break;
         case 'Proveedores':
             $controller = new ProveedoresController();
             break;
@@ -25,6 +31,8 @@ function call($controller, $action) {
 $controllers = array(
     'Account' => ['login', 'validation', 'error'],
     'Home' => ['index', 'error'],
+    'Productos' => ['familias', 'error'],
+    'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
     'Proveedores' => ['index', 'error']
 );
 

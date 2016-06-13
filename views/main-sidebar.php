@@ -42,6 +42,22 @@
             <!-- Optionally, you can add icons to the links -->
             <li class="<?php if($controller=='Home'){ echo 'active'; } ?>"><a href="index.php?controller=Home&action=index"><i class="fa fa-area-chart"></i> <span>Inicio</span></a></li>
 
+            <li class="treeview <?php if($controller=='Productos'){ echo 'active'; } ?>">
+                <a href="#">
+                    <i class="fa fa-archive"></i> <span>Productos</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu <?php if($controller=='Productos'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Productos'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <li class="<?php if($controller=='Productos' && $action=='articulos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=articulos"><i class="fa fa-circle-o"></i> Artículos</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='articulosSellos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=articulosSellos"><i class="fa fa-circle-o"></i> Artículos Sellos</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='familias'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=familias"><i class="fa fa-circle-o"></i> Familias</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='modeloVehiculos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=modeloVehiculos"><i class="fa fa-circle-o"></i> Modelo de vehículos</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='listaPrecioNV'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=listaPrecioNV"><i class="fa fa-circle-o"></i> Lista de Precio NV</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='sellosCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=sellosCunas"><i class="fa fa-circle-o"></i> Sellos Cuñas</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='sellosLanzas'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=sellosLanzas"><i class="fa fa-circle-o"></i> Sellos Lanzas</a></li>
+                </ul>
+            </li>
+
             <li class="treeview <?php if($controller=='Certificados'){ echo 'active'; } ?>">
                 <a href="#">
                     <i class="fa fa-file-text-o"></i> <span>Certificados</span>
@@ -101,7 +117,7 @@
                         </ul>
                     </li>
 
-                    <li class="<?php if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?>"><a href="#"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>
+                    <li class="<?php if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=informeCertificados"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>
                 </ul>
             </li>
 
