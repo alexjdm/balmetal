@@ -6,7 +6,7 @@
     <!--<base href="http://www.iongroup.cl/balmetal/" />-->
 
     <title>BalMetal</title>
-    <link rel="shortcut icon" href="http://www.fxlogos.com/images/favicon.png">
+    <link rel="shortcut icon" href="dist/img/favicon.png">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -21,7 +21,7 @@
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="dist/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="dist/css/skins/skin-red-light.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

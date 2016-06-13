@@ -90,7 +90,7 @@ if (!isset($_SESSION)) {
                         <tbody>
                         <?php $n = 1; ?>
                         <?php foreach ($familias as $familia): ?>
-                            <tr data-id="<?php echo $familia['ID_EMPRESA'] ?>">
+                            <tr data-id="<?php echo $familia['ID_FAMILIA'] ?>">
                                 <th><?php echo $n ?></th>
                                 <td><?php echo $familia['CODIGO_FAMILIA'] ?></td>
                                 <td><?php echo $familia['NOMBRE_FAMILIA'] ?></td>
@@ -132,9 +132,9 @@ if (!isset($_SESSION)) {
         $("#tablaFamilias").on("click", ".editFamilia", (function() {
             var id = $(this).closest('tr').data("id"); console.debug(id);
             ajax_loadModal($('#modalPrincipal'),
-                'ajax.php?controller=Familia&action=familiaEdit',
+                'ajax.php?controller=Productos&action=familiaEdit',
                 'GET',
-                { ID_EMPRESA: id },
+                { idFamilia: id },
                 defaultMessage);
             return false;
         }));
@@ -151,7 +151,7 @@ if (!isset($_SESSION)) {
 
                     $.ajax({
                         type: 'GET',
-                        url: 'ajax.php?controller=Familia&action=deleteFamilia',
+                        url: 'ajax.php?controller=Productos&action=deleteFamilia',
                         data: { idFamilia: id },
                         beforeSend: function() {
                         },
@@ -161,7 +161,7 @@ if (!isset($_SESSION)) {
                                 $('#messageFamilia').html('<div class="alert alert-danger" role="alert">' + returnedData.message + '</div>');
                             } else {
                                 $('#messageFamilia').html('<div class="alert alert-success" role="alert">' + returnedData.message + '</div>');
-                                window.location.href = "index.php?controller=Familia&action=index";
+                                window.location.href = "index.php?controller=Productos&action=familias";
                             }
                         },
                         error: function(data) {
@@ -173,7 +173,7 @@ if (!isset($_SESSION)) {
         }));
 
         $('#newFamiliaBtn').click(function(){
-            var e = 'ajax.php?controller=Familia&action=createNewFamilia'; console.debug(e);
+            var e = 'ajax.php?controller=Productos&action=createNewFamilia'; console.debug(e);
             var codigo = $("#codigo").val(); console.debug(codigo);
             var nombre = $("#nombre").val(); console.debug(nombre);
 
@@ -198,7 +198,7 @@ if (!isset($_SESSION)) {
                         if(data.status == "success"){
                             $('#messageNewFamilia').html('<div class="alert alert-success" role="alert"><strong>Listo! </strong>' + data.message + '</div>');
                             $('#newFamiliaBtn').html('Agregar');
-                            window.location.href = "index.php?controller=Familia&action=index";
+                            window.location.href = "index.php?controller=Productos&action=familias";
                         }
                         else{
                             $('#newFamiliaBtn').html("Agregar");

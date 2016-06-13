@@ -31,7 +31,7 @@ function call($controller, $action) {
 $controllers = array(
     'Account' => ['login', 'validation', 'error'],
     'Home' => ['index', 'error'],
-    'Productos' => ['familias', 'error'],
+    'Productos' => ['familias', 'createNewFamilia', 'familiaEdit', 'editFamilia', 'deleteFamilia', 'error'],
     'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
     'Proveedores' => ['index', 'error']
 );

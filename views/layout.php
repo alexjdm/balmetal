@@ -5,8 +5,6 @@
  * Date: 26-03-2016
  * Time: 0:51
  */
-$titulo = 'FxLogos';
-
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <div class="modal fade" id="modalConfirmacion"></div>
     <div class="modal fade" id="modalSubmodal"></div>
 
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-red-light sidebar-mini">
         <div class="wrapper">
             <?php require_once('main-header.php'); ?>
 

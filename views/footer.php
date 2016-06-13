@@ -10,7 +10,7 @@
 <footer class="main-footer">
     <!-- To the right -->
     <div class="pull-right hidden-xs">
-        Compra Venta
+        BalMetal
     </div>
     <!-- Default to the left -->
     <strong>Copyright &copy; 2016 <a href="http://www.iongroup.cl/">Ion Group</a>.</strong> All rights reserved.

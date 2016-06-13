@@ -26,7 +26,7 @@ class ProductosController {
         return $this->modelP->newFamilia($codigo, $nombre);
     }
 
-    public function empresaEdit() {
+    public function familiaEdit() {
         $idFamilia = isset($_GET['idFamilia']) ? $_GET['idFamilia'] : null;
         $familia = $this->modelP->getFamilia($idFamilia);
         require_once('views/productos/familiaEdit.php');
@@ -38,7 +38,7 @@ class ProductosController {
         $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
         $nombre = isset($_GET['nombre']) ? $_GET['nombre'] : null;
 
-        return $this->modelP->editFamilia($idFamilia, $nombre, $codigo);
+        return $this->modelP->editFamilia($idFamilia, $codigo, $nombre);
     }
 
     public function deleteFamilia() {
