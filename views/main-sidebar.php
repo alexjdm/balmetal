@@ -121,6 +121,19 @@
                 </ul>
             </li>
 
+            <li class="treeview <?php if($controller=='Mantenimiento'){ echo 'active'; } ?>">
+                <a href="#">
+                    <i class="fa fa-archive"></i> <span>Mantenimiento</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu <?php if($controller=='Mantenimiento'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Mantenimiento'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <li class="<?php if($controller=='Mantenimiento' && $action=='impuestos'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=impuestos"><i class="fa fa-circle-o"></i> Impuestos</a></li>
+                    <li class="<?php if($controller=='Mantenimiento' && $action=='bancos'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=bancos"><i class="fa fa-circle-o"></i> Entidades Bancarias</a></li>
+                    <li class="<?php if($controller=='Mantenimiento' && $action=='ubicaciones'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=ubicaciones"><i class="fa fa-circle-o"></i> Ubicaciones</a></li>
+                    <li class="<?php if($controller=='Mantenimiento' && $action=='formasPago'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=formasPago"><i class="fa fa-circle-o"></i> Formas de Pago</a></li>
+                </ul>
+            </li>
+
             <!--<li class="treeview">
                 <a href="#"><i class="fa fa-link"></i> <span>Datos Comerciales</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu">

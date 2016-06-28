@@ -5,8 +5,6 @@
     $controller = $_GET['controller'];
     $action     = $_GET['action'];
   } else {
-    //$controller = 'Home';
-    //$action     = 'index';
     $controller = 'Account';
     $action     = 'login';
   }

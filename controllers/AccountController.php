@@ -13,18 +13,19 @@ class AccountController {
     }
 
     public function logout() {
+
         if (!isset($_SESSION)) {
             @session_start();
         }
-        session_destroy();
 
-        $actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-        $link = "http://$_SERVER[SERVER_NAME]/admin/index.php";
-        //require_once('views/account/login.php');
-        //header("Location: index.php");
-        echo '<script type="text/javascript">
-        window.location.assign("index.php");
-        </script>';
+        if ($_SESSION['id'])
+        {
+            session_destroy();
+            echo '<script type="text/javascript">
+                window.location.assign("index.php");
+            </script>';
+        }
+
     }
 
     public function remember() {

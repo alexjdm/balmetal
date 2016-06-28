@@ -20,6 +20,9 @@ function call($controller, $action) {
         case 'Proveedores':
             $controller = new ProveedoresController();
             break;
+        case 'Mantenimiento':
+            $controller = new MantenimientoController();
+            break;
     }
 
     // call the action
@@ -29,9 +32,15 @@ function call($controller, $action) {
 // just a list of the controllers we have and their actions
 // we consider those "allowed" values
 $controllers = array(
-    'Account' => ['login', 'validation', 'error'],
+    'Account' => ['login', 'logout', 'validation', 'error'],
     'Home' => ['index', 'error'],
-    'Productos' => ['familias', 'createNewFamilia', 'familiaEdit', 'editFamilia', 'deleteFamilia', 'error'],
+    'Productos' => ['familias', 'createNewFamilia', 'familiaEdit', 'editFamilia', 'deleteFamilia',
+        'articulos', 'newArticulo', 'createNewArticulo', 'articuloEdit', 'editArticulo', 'deleteArticulo', 'error'],
+    'Mantenimiento' => ['impuestos', 'createNewImpuesto', 'impuestoEdit', 'editImpuesto', 'deleteImpuesto',
+        'bancos', 'createNewBanco', 'bancoEdit', 'editBanco', 'deleteBanco',
+        'ubicaciones', 'createNewUbicacion', 'ubicacionEdit', 'editUbicacion', 'deleteUbicacion',
+        'formasPago', 'createNewFormaPago', 'formaPagoEdit', 'editFormaPago', 'deleteFormaPago',
+        'error'],
     'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
     'Proveedores' => ['index', 'error']
 );

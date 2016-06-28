@@ -107,6 +107,109 @@ class ProductosModel
     }
 
 
+    //************** ARIICULO *********************
+    public function getArticulosList(){
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("SELECT * FROM articulo WHERE HABILITADO='1'");
+        $sql->execute();
+
+        return $sql->fetchAll();
+    }
+
+    public function getArticulo($idArticulo){
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("SELECT * FROM articulo WHERE ID_ARTICULO=$idArticulo AND HABILITADO='1'");
+        $sql->execute();
+
+        return $sql->fetchAll()[0];
+    }
+
+    public function editArticulo($idArticulo, $codigo, $nombre){
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("UPDATE articulo set NOMBRE_FAMILIA =:NOMBRE_FAMILIA, CODIGO_FAMILIA =:CODIGO_FAMILIA WHERE ID_ARTICULO=:ID_ARTICULO");
+
+        if ($sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo), 'ID_ARTICULO' => $idArticulo ))) {
+            $status  = "success";
+            $message = "Los datos han sido actualizados.";
+        }
+        else
+        {
+            $status  = "error";
+            $message = "Ha ocurrido un problema con la actualización de los datos.";
+        }
+
+        $data = array(
+            'status'  => $status,
+            'message' => $message
+        );
+
+        echo json_encode($data);
+
+        Database::disconnect();
+    }
+
+    public function deleteArticulo($idArticulo){
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("UPDATE articulo set HABILITADO =:HABILITADO WHERE ID_ARTICULO=:ID_ARTICULO");
+
+        if ($sql->execute(array('HABILITADO' => 0, 'ID_ARTICULO' => $idArticulo ))) {
+            $status  = "success";
+            $message = "La articulo ha sido eliminada.";
+        }
+        else
+        {
+            $status  = "error";
+            $message = "Ha ocurrido un problema, por favor intenta nuevamente.";
+        }
+
+        $data = array(
+            'status'  => $status,
+            'message' => $message
+        );
+
+        echo json_encode($data);
+
+        Database::disconnect();
+    }
+
+    public function newArticulo($codigo, $nombre){
+
+        if (!defined("PHP_EOL")) define("PHP_EOL", "\r\n");
+
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("INSERT INTO `articulo`(`NOMBRE_FAMILIA`, `CODIGO_FAMILIA`, `HABILITADO`) VALUES (:NOMBRE_FAMILIA, :CODIGO_FAMILIA, '1')");
+        $sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo)));
+        $id = $pdo->lastInsertId();
+
+        if(!empty($id)) {
+            $status  = "success";
+            $message = "Creación exitosa.";
+        }
+        else{
+            $status  = "error";
+            $message = "Error con la base de datos, por favor intente nuevamente.";
+        }
+
+        $data = array(
+            'status'  => $status,
+            'message' => $message
+        );
+
+        echo json_encode($data);
+
+        Database::disconnect();
+    }
+
     //************** PRODUCTO *********************
 
     public function getProductosList(){
