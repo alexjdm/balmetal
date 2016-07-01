@@ -11,14 +11,17 @@ function call($controller, $action) {
         case 'Home':
             $controller = new HomeController();
             break;
+        case 'Proveedores':
+            $controller = new ProveedoresController();
+            break;
+        case 'Clientes':
+            $controller = new ClientesController();
+            break;
         case 'Productos':
             $controller = new ProductosController();
             break;
         case 'Certificados':
             $controller = new CertificadosController();
-            break;
-        case 'Proveedores':
-            $controller = new ProveedoresController();
             break;
         case 'Mantenimiento':
             $controller = new MantenimientoController();
@@ -34,15 +37,18 @@ function call($controller, $action) {
 $controllers = array(
     'Account' => ['login', 'logout', 'validation', 'error'],
     'Home' => ['index', 'error'],
+    'Clientes' => ['clientes', 'newCliente', 'createNewCliente', 'clienteEdit', 'editCliente', 'clienteView', 'deleteCliente',
+        'error'],
+    'Proveedores' => ['proveedores', 'newProveedor', 'createNewProveedor', 'proveedorEdit', 'editProveedor', 'proveedorView', 'deleteProveedor',
+        'error'],
     'Productos' => ['familias', 'createNewFamilia', 'familiaEdit', 'editFamilia', 'deleteFamilia',
         'articulos', 'newArticulo', 'createNewArticulo', 'articuloEdit', 'editArticulo', 'deleteArticulo', 'error'],
+    'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
     'Mantenimiento' => ['impuestos', 'createNewImpuesto', 'impuestoEdit', 'editImpuesto', 'deleteImpuesto',
         'bancos', 'createNewBanco', 'bancoEdit', 'editBanco', 'deleteBanco',
         'ubicaciones', 'createNewUbicacion', 'ubicacionEdit', 'editUbicacion', 'deleteUbicacion',
         'formasPago', 'createNewFormaPago', 'formaPagoEdit', 'editFormaPago', 'deleteFormaPago',
-        'error'],
-    'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
-    'Proveedores' => ['index', 'error']
+        'error']
 );
 
 // check that the requested controller and action are both allowed

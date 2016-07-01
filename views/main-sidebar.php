@@ -42,6 +42,17 @@
             <!-- Optionally, you can add icons to the links -->
             <li class="<?php if($controller=='Home'){ echo 'active'; } ?>"><a href="index.php?controller=Home&action=index"><i class="fa fa-area-chart"></i> <span>Inicio</span></a></li>
 
+            <li class="treeview <?php if($controller=='Proveedores' || $controller=='Clientes'){ echo 'active'; } ?>">
+                <a href="#">
+                    <i class="fa fa-list"></i> <span>Datos Comerciales</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu <?php if($controller=='Proveedores' || $controller=='Clientes'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Proveedores' || $controller=='Clientes'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <li class="<?php if($controller=='Proveedores' && $action=='proveedores'){ echo 'active'; } ?>"><a href="index.php?controller=Proveedores&action=proveedores"><i class="fa fa-circle-o"></i> Proveedores</a></li>
+                    <li class="<?php if($controller=='Clientes' && $action=='clientes'){ echo 'active'; } ?>"><a href="index.php?controller=Clientes&action=clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                </ul>
+            </li>
+
             <li class="treeview <?php if($controller=='Productos'){ echo 'active'; } ?>">
                 <a href="#">
                     <i class="fa fa-archive"></i> <span>Productos</span>
@@ -123,7 +134,7 @@
 
             <li class="treeview <?php if($controller=='Mantenimiento'){ echo 'active'; } ?>">
                 <a href="#">
-                    <i class="fa fa-archive"></i> <span>Mantenimiento</span>
+                    <i class="fa fa-tasks"></i> <span>Mantenimiento</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu <?php if($controller=='Mantenimiento'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Mantenimiento'){ echo 'block'; } else { echo 'none'; } ?>;">

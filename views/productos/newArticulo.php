@@ -4,13 +4,13 @@
     }
 </style>
 
-<div class="modal-dialog" style="width:700px;">
+<div class="modal-dialog" style="width:700px; height: 600px;">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Nuevo Artículo</h4>
         </div>
-        <div class="modal-body" style="max-height: 600px; overflow-y: auto;">
+        <div class="modal-body" style="max-height: 479px; overflow-y: auto;">
 
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="codigo">Código</label>
@@ -114,14 +114,12 @@
                 </div>
             </div>
 
-            <br>
-            <div id="messageNewArticulo"></div>
         </div>
 
         <div class="modal-footer">
+            <div id="messageNewArticulo" style="float:left; width: 400px;"></div>
             <button type="button" id="cerrarPrincipal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             <button id="saveArticuloNew" type="button" class="btn btn-primary">Guardar</button>
-
         </div>
     </div>
 </div>
@@ -139,7 +137,7 @@
 
         if(nombre == '' || codigo == '')
         {
-            $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert"><strong>Error! </strong> Debes llenar todos los campos.</div>');
+            $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar todos los campos.</div>');
         }
         else
         {
@@ -158,14 +156,14 @@
                     console.debug(data);
                     //var returnedData = JSON.parse(data); console.debug(returnedData);
                     if(data.status == "success"){
-                        $('#messageNewArticulo').html('<div class="alert alert-success" role="alert"><strong>Listo! </strong>' + data.message + '</div>');
+                        $('#messageNewArticulo').html('<div class="alert alert-success" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Listo! </strong>' + data.message + '</div>');
                         $('#saveArticuloNew').html('<i class="fa fa-check" aria-hidden="true"></i> Listo');
                         $('#modalPrincipal').hide();
                         window.location.href = "index.php?controller=Productos&action=familias";
                     }
                     else{
                         $('#saveArticuloNew').html("Guardar");
-                        $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert"><strong>Error! </strong>' + data.message + '</div>');
+                        $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong>' + data.message + '</div>');
                     }
                 },
                 error: function (data) {
@@ -173,7 +171,7 @@
                     console.debug(data);
                     //var returnedData = JSON.parse(data); console.debug(returnedData);
                     $('#saveArticuloNew').html("Guardar");
-                    $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert"><strong>Error! </strong>' + data.message + '</div>');
+                    $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong>' + data.message + '</div>');
                 }
             });
         }

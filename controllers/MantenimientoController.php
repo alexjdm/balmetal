@@ -91,8 +91,8 @@ class MantenimientoController {
     }
 
     //************** UBICACIONES *********************
-    public function formapagoes(){
-        $formapagoes = $this->modelU->getUbicacionesList();
+    public function ubicaciones(){
+        $ubicaciones = $this->modelU->getUbicacionesList();
 
         require_once('views/ubicaciones/ubicaciones.php');
     }

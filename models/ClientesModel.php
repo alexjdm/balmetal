@@ -1,32 +1,31 @@
 <?php
 
-class ProveedoresModel
+class ClientesModel
 {
 
-    public function getProveedoresList(){
+    public function getClientesList(){
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM proveedor WHERE HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM cliente WHERE HABILITADO='1'");
         $sql->execute();
 
         return $sql->fetchAll();
     }
 
-    public function getProveedor($idProveedor){
+    public function getCliente($idCliente){
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM proveedor WHERE ID_PROVEEDOR=$idProveedor AND HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM cliente WHERE ID_CLIENTE=$idCliente AND HABILITADO='1'");
         $sql->execute();
 
         return $sql->fetchAll()[0];
     }
 
-    public function editProveedor($idProveedor, $nombre, $rut, $tipo, $direccion, $idRegion, $comuna, $banco, $cuentaBancaria,
-                                 $codigoPostal, $telefono, $movil, $correo, $sitioWeb){
+    public function editCliente($idCliente, $nombre, $rut,  $direccion, $comuna, $idRegion, $codigoPostal, $telefono, $movil, $correo, $sitioWeb,
+                                $formaPago, $banco, $cuentaBancaria){
 
-        $tipo = $tipo != '' ? $tipo : null;
         $direccion = $direccion != '' ?  $direccion  : null;
         $idRegion = $idRegion != '' ?  $idRegion  : null;
         $comuna = $comuna != '' ?  $comuna  : null;
@@ -37,15 +36,16 @@ class ProveedoresModel
         $movil = $movil != '' ?  $movil  : null;
         $correo = $correo != '' ?  $correo  : null;
         $sitioWeb = $sitioWeb != '' ?  $sitioWeb  : null;
+        $formaPago = $formaPago != '' ?  $formaPago  : null;
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("UPDATE proveedor set NOMBRE =:NOMBRE, RUT =:RUT, TIPO_PROVEEDOR =:TIPO_PROVEEDOR, DIRECCION =:DIRECCION, COMUNA =:COMUNA, ID_REGION =:ID_REGION, ID_BANCO =:ID_BANCO, CUENTA_BANCARIA =:CUENTA_BANCARIA, CODIGO_POSTAL =:CODIGO_POSTAL, TELEFONO =:TELEFONO, MOVIL =:MOVIL, CORREO_ELECTRONICO =:CORREO_ELECTRONICO, SITIO_WEB =:SITIO_WEB WHERE ID_PROVEEDOR=:ID_PROVEEDOR");
+        $sql = $pdo->prepare("UPDATE cliente set NOMBRE =:NOMBRE, RUT =:RUT, DIRECCION =:DIRECCION, COMUNA =:COMUNA, ID_REGION =:ID_REGION, CODIGO_POSTAL =:CODIGO_POSTAL, TELEFONO =:TELEFONO, MOVIL =:MOVIL, CORREO_ELECTRONICO =:CORREO_ELECTRONICO, SITIO_WEB =:SITIO_WEB, FORMA_PAGO =:FORMA_PAGO, ID_BANCO =:ID_BANCO, CUENTA_BANCARIA =:CUENTA_BANCARIA WHERE ID_CLIENTE=:ID_CLIENTE");
 
-        if ($sql->execute(array('NOMBRE' => trim($nombre), 'RUT' => trim($rut), 'TIPO_PROVEEDOR' => trim($tipo), 'DIRECCION' => trim($direccion), 'COMUNA' => trim($comuna), 'ID_REGION' => $idRegion,
-            'ID_BANCO' => $banco, 'CUENTA_BANCARIA' => trim($cuentaBancaria), 'CODIGO_POSTAL' => $codigoPostal, 'TELEFONO' => trim($telefono), 'MOVIL' => trim($movil), 'CORREO_ELECTRONICO' => trim($correo), 'SITIO_WEB' => trim($sitioWeb),
-            'ID_PROVEEDOR' => $idProveedor))) {
+        if ($sql->execute(array('NOMBRE' => trim($nombre), 'RUT' => trim($rut), 'DIRECCION' => trim($direccion), 'COMUNA' => trim($comuna), 'ID_REGION' => $idRegion,
+            'CODIGO_POSTAL' => $codigoPostal, 'TELEFONO' => trim($telefono), 'MOVIL' => trim($movil), 'CORREO_ELECTRONICO' => trim($correo), 'SITIO_WEB' => trim($sitioWeb),
+            'FORMA_PAGO' => $formaPago, 'ID_BANCO' => $banco, 'CUENTA_BANCARIA' => trim($cuentaBancaria), 'ID_CLIENTE' => $idCliente))) {
             $status  = "success";
             $message = "Los datos han sido actualizados.";
         }
@@ -65,15 +65,15 @@ class ProveedoresModel
         Database::disconnect();
     }
 
-    public function deleteProveedor($idProveedor){
+    public function deleteCliente($idCliente){
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("UPDATE proveedor set HABILITADO =:HABILITADO WHERE ID_PROVEEDOR=:ID_PROVEEDOR");
+        $sql = $pdo->prepare("UPDATE cliente set HABILITADO =:HABILITADO WHERE ID_CLIENTE=:ID_CLIENTE");
 
-        if ($sql->execute(array('HABILITADO' => 0, 'ID_PROVEEDOR' => $idProveedor ))) {
+        if ($sql->execute(array('HABILITADO' => 0, 'ID_CLIENTE' => $idCliente ))) {
             $status  = "success";
-            $message = "El proveedor ha sido eliminado.";
+            $message = "El cliente ha sido eliminado.";
         }
         else
         {
@@ -91,10 +91,9 @@ class ProveedoresModel
         Database::disconnect();
     }
 
-    public function newProveedor($nombre, $rut, $tipo, $direccion, $idRegion, $comuna, $banco, $cuentaBancaria,
-                                 $codigoPostal, $telefono, $movil, $correo, $sitioWeb){
+    public function newCliente($nombre, $rut,  $direccion, $comuna, $idRegion, $codigoPostal, $telefono, $movil, $correo, $sitioWeb,
+                               $formaPago, $banco, $cuentaBancaria){
 
-        $tipo = $tipo != '' ? $tipo : null;
         $direccion = $direccion != '' ?  $direccion  : null;
         $idRegion = $idRegion != '' ?  $idRegion  : null;
         $comuna = $comuna != '' ?  $comuna  : null;
@@ -105,17 +104,17 @@ class ProveedoresModel
         $movil = $movil != '' ?  $movil  : null;
         $correo = $correo != '' ?  $correo  : null;
         $sitioWeb = $sitioWeb != '' ?  $sitioWeb  : null;
-
+        $formaPago = $formaPago != '' ?  $formaPago  : null;
 
         if (!defined("PHP_EOL")) define("PHP_EOL", "\r\n");
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("INSERT INTO `proveedor`(`NOMBRE`, `RUT`, `TIPO_PROVEEDOR`, `DIRECCION`, `COMUNA`, `ID_REGION`, `ID_BANCO`, `CUENTA_BANCARIA`, `CODIGO_POSTAL`, `TELEFONO`, `MOVIL`, `CORREO_ELECTRONICO`, `SITIO_WEB`, `HABILITADO`)
-              VALUES (:NOMBRE, :RUT, :TIPO_PROVEEDOR, :DIRECCION, :COMUNA, :ID_REGION, :ID_BANCO, :CUENTA_BANCARIA, :CODIGO_POSTAL, :TELEFONO, :MOVIL, :CORREO_ELECTRONICO, :SITIO_WEB, '1')");
-        $sql->execute(array('NOMBRE' => trim($nombre), 'RUT' => trim($rut), 'TIPO_PROVEEDOR' => trim($tipo), 'DIRECCION' => trim($direccion), 'COMUNA' => trim($comuna), 'ID_REGION' => $idRegion,
-            'ID_BANCO' => $banco, 'CUENTA_BANCARIA' => trim($cuentaBancaria), 'CODIGO_POSTAL' => $codigoPostal, 'TELEFONO' => trim($telefono), 'MOVIL' => trim($movil), 'CORREO_ELECTRONICO' => trim($correo), 'SITIO_WEB' => trim($sitioWeb) ));
+        $sql = $pdo->prepare("INSERT INTO `cliente`(`NOMBRE`, `RUT`, `DIRECCION`, `COMUNA`, `ID_REGION`, `CODIGO_POSTAL`, `TELEFONO`, `MOVIL`, `CORREO_ELECTRONICO`, `SITIO_WEB`, `FORMA_PAGO`, `ID_BANCO`, `CUENTA_BANCARIA`, `HABILITADO`)
+              VALUES (:NOMBRE, :RUT, :DIRECCION, :COMUNA, :ID_REGION, :CODIGO_POSTAL, :TELEFONO, :MOVIL, :CORREO_ELECTRONICO, :SITIO_WEB, :FORMA_PAGO, :ID_BANCO, :CUENTA_BANCARIA, '1')");
+        $sql->execute(array('NOMBRE' => trim($nombre), 'RUT' => trim($rut), 'DIRECCION' => trim($direccion), 'COMUNA' => trim($comuna), 'ID_REGION' => $idRegion, 'CODIGO_POSTAL' => $codigoPostal,
+            'TELEFONO' => trim($telefono), 'MOVIL' => trim($movil), 'CORREO_ELECTRONICO' => trim($correo), 'SITIO_WEB' => trim($sitioWeb), 'FORMA_PAGO' => $formaPago, 'ID_BANCO' => $banco, 'CUENTA_BANCARIA' => trim($cuentaBancaria) ));
         $id = $pdo->lastInsertId();
 
         if(!empty($id)) {
