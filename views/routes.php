@@ -23,6 +23,9 @@ function call($controller, $action) {
         case 'Certificados':
             $controller = new CertificadosController();
             break;
+        case 'Sellos':
+            $controller = new SellosController();
+            break;
         case 'Mantenimiento':
             $controller = new MantenimientoController();
             break;
@@ -42,12 +45,17 @@ $controllers = array(
     'Proveedores' => ['proveedores', 'newProveedor', 'createNewProveedor', 'proveedorEdit', 'editProveedor', 'proveedorView', 'deleteProveedor',
         'error'],
     'Productos' => ['familias', 'createNewFamilia', 'familiaEdit', 'editFamilia', 'deleteFamilia',
-        'articulos', 'newArticulo', 'createNewArticulo', 'articuloEdit', 'editArticulo', 'deleteArticulo', 'error'],
+        'articulos', 'newArticulo', 'createNewArticulo', 'articuloEdit', 'editArticulo', 'articuloCodigo', 'codigoArticulo',
+        'asignarSelloArticulo', 'articuloAsignarSello', 'deleteArticulo', 'getArticulos', 'error'],
     'Certificados' => ['asignacionBarras', 'sellosBarras', 'error'],
+    'Sellos' => ['sellos', 'sellosEdit', 'editSellos', 'deleteSellos', 'selloView', 'imprimirSello', 'versionImprimir',
+        'newSello', 'createSello', 'newCertificado',
+        'error'],
     'Mantenimiento' => ['impuestos', 'createNewImpuesto', 'impuestoEdit', 'editImpuesto', 'deleteImpuesto',
         'bancos', 'createNewBanco', 'bancoEdit', 'editBanco', 'deleteBanco',
         'ubicaciones', 'createNewUbicacion', 'ubicacionEdit', 'editUbicacion', 'deleteUbicacion',
         'formasPago', 'createNewFormaPago', 'formaPagoEdit', 'editFormaPago', 'deleteFormaPago',
+        'autos', 'createNewAuto', 'autoEdit', 'editAuto', 'deleteAuto',
         'error']
 );
 

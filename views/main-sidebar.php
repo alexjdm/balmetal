@@ -26,14 +26,14 @@
         </div>
 
         <!-- search form (Optional) -->
-        <form action="#" method="get" class="sidebar-form">
+        <!--<form action="#" method="get" class="sidebar-form">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
-        </form>
+        </form>-->
         <!-- /.search form -->
 
         <!-- Sidebar Menu -->
@@ -60,12 +60,12 @@
                 </a>
                 <ul class="treeview-menu <?php if($controller=='Productos'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Productos'){ echo 'block'; } else { echo 'none'; } ?>;">
                     <li class="<?php if($controller=='Productos' && $action=='articulos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=articulos"><i class="fa fa-circle-o"></i> Artículos</a></li>
-                    <li class="<?php if($controller=='Productos' && $action=='articulosSellos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=articulosSellos"><i class="fa fa-circle-o"></i> Artículos Sellos</a></li>
+                    <!--<li class="<?php if($controller=='Productos' && $action=='articulosSellos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=articulosSellos"><i class="fa fa-circle-o"></i> Artículos Sellos</a></li>-->
                     <li class="<?php if($controller=='Productos' && $action=='familias'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=familias"><i class="fa fa-circle-o"></i> Familias</a></li>
-                    <li class="<?php if($controller=='Productos' && $action=='modeloVehiculos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=modeloVehiculos"><i class="fa fa-circle-o"></i> Modelo de vehículos</a></li>
+                    <!--<li class="<?php if($controller=='Productos' && $action=='modeloVehiculos'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=modeloVehiculos"><i class="fa fa-circle-o"></i> Modelo de vehículos</a></li>
                     <li class="<?php if($controller=='Productos' && $action=='listaPrecioNV'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=listaPrecioNV"><i class="fa fa-circle-o"></i> Lista de Precio NV</a></li>
                     <li class="<?php if($controller=='Productos' && $action=='sellosCunas'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=sellosCunas"><i class="fa fa-circle-o"></i> Sellos Cuñas</a></li>
-                    <li class="<?php if($controller=='Productos' && $action=='sellosLanzas'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=sellosLanzas"><i class="fa fa-circle-o"></i> Sellos Lanzas</a></li>
+                    <li class="<?php if($controller=='Productos' && $action=='sellosLanzas'){ echo 'active'; } ?>"><a href="index.php?controller=Productos&action=sellosLanzas"><i class="fa fa-circle-o"></i> Sellos Lanzas</a></li>-->
                 </ul>
             </li>
 
@@ -74,8 +74,11 @@
                     <i class="fa fa-file-text-o"></i> <span>Certificados</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
-                <ul class="treeview-menu <?php if($controller=='Certificados'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Certificados'){ echo 'block'; } else { echo 'none'; } ?>;">
-                    <?php $asignacion = ($action=='asignacionBarras' || $action=='asignacionLunetas' || $action=='asignacionParachoques' || $action=='asignacionCunas'); ?>
+                <ul class="treeview-menu <?php if($controller=='Certificados' || $controller=='Sellos'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Certificados' || $controller=='Sellos'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <li class="<?php if($controller=='Sellos' && $action=='sellos'){ echo 'active'; } ?>"><a href="index.php?controller=Sellos&action=sellos"><i class="fa fa-circle-o"></i> Sellos</a></li>
+                    <li class="<?php if($controller=='Certificados' && $action=='certificados'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=certificados"><i class="fa fa-circle-o"></i> Certificados</a></li>
+
+                    <!--<?php $asignacion = ($action=='asignacionBarras' || $action=='asignacionLunetas' || $action=='asignacionParachoques' || $action=='asignacionCunas'); ?>
                     <li class="<?php if($asignacion){ echo 'active'; } ?>">
                         <a href="#"><i class="fa fa-circle-o"></i> Asignación <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu <?php if($asignacion){ echo 'menu-open'; } ?>" style="display: <?php if($asignacion){ echo 'block'; } else { echo 'none'; } ?>;">
@@ -126,7 +129,7 @@
                         <ul class="treeview-menu <?php if($anulacion){ echo 'menu-open'; } ?>" style="display: <?php if($anulacion){ echo 'block'; } else { echo 'none'; } ?>;">
                             <li class="<?php if($action=='anulacionFolioBarras'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=anulacionFolioBarras"><i class="fa fa-circle-o"></i> Folio Barras</a></li>
                         </ul>
-                    </li>
+                    </li>-->
 
                     <li class="<?php if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=informeCertificados"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>
                 </ul>
@@ -138,6 +141,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu <?php if($controller=='Mantenimiento'){ echo 'menu-open'; } ?>" style="display: <?php if($controller=='Mantenimiento'){ echo 'block'; } else { echo 'none'; } ?>;">
+                    <li class="<?php if($controller=='Mantenimiento' && $action=='autos'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=autos"><i class="fa fa-circle-o"></i> Automóvil</a></li>
                     <li class="<?php if($controller=='Mantenimiento' && $action=='impuestos'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=impuestos"><i class="fa fa-circle-o"></i> Impuestos</a></li>
                     <li class="<?php if($controller=='Mantenimiento' && $action=='bancos'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=bancos"><i class="fa fa-circle-o"></i> Entidades Bancarias</a></li>
                     <li class="<?php if($controller=='Mantenimiento' && $action=='ubicaciones'){ echo 'active'; } ?>"><a href="index.php?controller=Mantenimiento&action=ubicaciones"><i class="fa fa-circle-o"></i> Ubicaciones</a></li>

@@ -148,7 +148,7 @@
                         $('#messageEditCliente').html('<div class="alert alert-success" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Listo! </strong>' + data.message + '</div>');
                         $('#saveClienteEdit').html('<i class="fa fa-check" aria-hidden="true"></i> Listo');
                         $('#modalPrincipal').hide();
-                        window.location.href = "index.php?controller=Clientes&action=proveedores";
+                        window.location.href = "index.php?controller=Clientes&action=clientes";
                     }
                     else {
                         $('#saveClienteEdit').html("Guardar");

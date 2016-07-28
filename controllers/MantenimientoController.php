@@ -2,6 +2,7 @@
 /*Incluimos el fichero de la clase*/
 require_once 'connections/db.php';
 require_once 'helpers/CommonHelper.php';
+require_once 'models/AutosModel.php';
 require_once 'models/ImpuestosModel.php';
 require_once 'models/BancosModel.php';
 require_once 'models/UbicacionesModel.php';
@@ -9,6 +10,7 @@ require_once 'models/FormasPagoModel.php';
 
 class MantenimientoController {
 
+    public $modelA;
     public $modelI;
     public $modelB;
     public $modelU;
@@ -16,6 +18,7 @@ class MantenimientoController {
 
     public function __construct()
     {
+        $this-> modelA = new AutosModel();
         $this-> modelI = new ImpuestosModel();
         $this-> modelB = new BancosModel();
         $this-> modelU = new UbicacionesModel();
@@ -124,10 +127,10 @@ class MantenimientoController {
     }
 
     //************** FORMAS DE PAGO *********************
-    public function formaspago(){
+    public function formasPago(){
         $formasPago = $this->modelFP->getFormasPagoList();
 
-        require_once('views/formaspago/formasPago.php');
+        require_once('views/formasPago/formasPago.php');
     }
 
     public function createNewFormaPago() {
@@ -140,7 +143,7 @@ class MantenimientoController {
         $idFormaPago = isset($_GET['idFormaPago']) ? $_GET['idFormaPago'] : null;
         $formaPago = $this->modelFP->getFormaPago($idFormaPago);
 
-        require_once('views/formaspago/formaPagoEdit.php');
+        require_once('views/formasPago/formaPagoEdit.php');
     }
 
     public function editFormaPago() {
@@ -154,6 +157,42 @@ class MantenimientoController {
         $idFormaPago = isset($_GET['idFormaPago']) ? $_GET['idFormaPago'] : null;
 
         return $this->modelFP->deleteFormaPago($idFormaPago);
+    }
+
+
+    //************** AUTOS *********************
+    public function autos(){
+        $autos = $this->modelA->getAutosList();
+
+        require_once('views/autos/autos.php');
+    }
+
+    public function createNewAuto() {
+        $marca = isset($_GET['marca']) ? $_GET['marca'] : null;
+        $modelo = isset($_GET['modelo']) ? $_GET['modelo'] : null;
+
+        return $this->modelA->newAuto($marca, $modelo);
+    }
+
+    public function autoEdit() {
+        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+        $auto = $this->modelA->getAuto($idAuto);
+
+        require_once('views/autos/autoEdit.php');
+    }
+
+    public function editAuto() {
+        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+        $marca = isset($_GET['marca']) ? $_GET['marca'] : null;
+        $modelo = isset($_GET['modelo']) ? $_GET['modelo'] : null;
+
+        return $this->modelA->editAuto($idAuto, $marca, $modelo);
+    }
+
+    public function deleteAuto() {
+        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+
+        return $this->modelA->deleteAuto($idAuto);
     }
 
     public function error() {

@@ -53,7 +53,7 @@ if (!isset($_SESSION)) {
                             <th>Código</th>
                             <th>Descripción</th>
                             <th>Familia</th>
-                            <th>Precio T.</th>
+                            <th>Precio Venta</th>
                             <th>Stock</th>
                             <th>Opciones</th>
                         </tr>
@@ -61,11 +61,32 @@ if (!isset($_SESSION)) {
                         <tbody>
                         <?php $n = 1; ?>
                         <?php foreach ($articulos as $articulo): ?>
-                            <tr data-id="<?php echo $articulo['ID_FAMILIA'] ?>">
+                            <tr data-id="<?php echo $articulo['ID_ARTICULO'] ?>">
                                 <th><?php echo $n ?></th>
-                                <td><?php echo $articulo['CODIGO_FAMILIA'] ?></td>
-                                <td><?php echo $articulo['NOMBRE_FAMILIA'] ?></td>
+                                <td><?php echo $articulo['CODIGO_ARTICULO'] ?></td>
+                                <td><?php echo $articulo['DESCRIPCION'] ?></td>
                                 <td>
+                                    <?php
+                                        foreach($familias as $familia):
+                                            if($familia['ID_FAMILIA'] == $articulo['ID_FAMILIA'])
+                                            {
+                                                echo $familia['NOMBRE_FAMILIA'];
+                                                break;
+                                            }
+                                        endforeach;
+                                    ?>
+                                </td>
+                                <td><?php echo $articulo['PRECIO_VENTA'] ?></td>
+                                <td><?php echo $articulo['STOCK'] ?></td>
+                                <td>
+                                    <button data-original-title="Edit Row" class="btn btn-xs btn-default codigoArticulo">
+                                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                                    </button>
+                                    &nbsp
+                                    <button data-original-title="Delete" class="btn btn-xs btn-default asignarSello">
+                                        <i class="fa fa-certificate" aria-hidden="true"></i>
+                                    </button>
+                                    &nbsp
                                     <button data-original-title="Edit Row" class="btn btn-xs btn-default editArticulo">
                                         <i class="fa fa-pencil"></i>
                                     </button>
@@ -84,7 +105,7 @@ if (!isset($_SESSION)) {
                             <th>Código</th>
                             <th>Descripción</th>
                             <th>Familia</th>
-                            <th>Precio T.</th>
+                            <th>Precio Venta</th>
                             <th>Stock</th>
                             <th>Opciones</th>
                         </tr>
@@ -101,6 +122,26 @@ if (!isset($_SESSION)) {
 <script>
     $(function() {
         var table = $("#tablaArticulos").dataTable();
+
+        $("#tablaArticulos").on("click", ".codigoArticulo", (function() {
+            var id = $(this).closest('tr').data("id");
+            ajax_loadModal($('#modalPrincipal'),
+                'ajax.php?controller=Productos&action=articuloCodigo',
+                'GET',
+                { idArticulo: id },
+                defaultMessage);
+            return false;
+        }));
+
+        $("#tablaArticulos").on("click", ".asignarSello", (function() {
+            var id = $(this).closest('tr').data("id");
+            ajax_loadModal($('#modalPrincipal'),
+                'ajax.php?controller=Productos&action=asignarSelloArticulo',
+                'GET',
+                { idArticulo: id },
+                defaultMessage);
+            return false;
+        }));
 
         $("#tablaArticulos").on("click", ".editArticulo", (function() {
             var id = $(this).closest('tr').data("id"); console.debug(id);
@@ -153,6 +194,14 @@ if (!isset($_SESSION)) {
                 { idArticulo: id },
                 defaultMessage);
             return false;
+        });
+
+        $('.certificado').click(function(){
+            window.open(
+                'helpers/blog_pdf/php/pdf/pdf_blanco.php',
+                '_blank'
+            );
+            //window.location.href = "helpers/blog_pdf/php/pdf/pdf_blanco.php";
         });
 
     });
