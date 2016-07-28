@@ -65,7 +65,17 @@ if (!isset($_SESSION)) {
                         <tbody>
                         <?php $n = 1; ?>
                         <?php foreach ($sellos as $sello): ?>
-                            <tr data-id="<?php echo $sello['ID_SELLO'] ?>" data-sello="<?php echo $sello['SELLO'] ?>">
+                            <tr data-id="<?php echo $sello['ID_SELLO'] ?>" data-sello="<?php echo $sello['SELLO'] ?>"
+                                data-codigo="<?php
+                                    foreach($articulos as $articulo)
+                                    {
+                                        if($sello['ID_ARTICULO'] == $articulo['ID_ARTICULO'])
+                                        {
+                                            echo $articulo['CODIGO_BARRA'];
+                                            break;
+                                        }
+                                    }
+                                ?>">
                                 <td><?php echo $n ?></td>
                                 <td><?php echo $sello['SELLO'] ?></td>
                                 <td>
@@ -185,6 +195,7 @@ if (!isset($_SESSION)) {
 
             var id = $(this).closest('tr').data("id");
             var sello = $(this).closest('tr').data("sello");
+            var codigo = $(this).closest('tr').data("codigo");
 
             $.ajax({
                 type: 'GET',
@@ -203,7 +214,7 @@ if (!isset($_SESSION)) {
                         $('#saveProveedorEdit').html('<i class="fa fa-check" aria-hidden="true"></i> Listo');
                         $('#modalPrincipal').hide();
                         window.location.href = "index.php?controller=Sellos&action=sellos";
-                        var win = window.open('imprimir.php?sello=' + sello, '_blank');
+                        var win = window.open('imprimir.php?sello=' + sello + '&codigo=' + codigo, '_blank');
                         win.focus();
                         //reloadPage();
                         window.location.href = "index.php?controller=Sellos&action=sellos";

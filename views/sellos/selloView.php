@@ -41,7 +41,7 @@
                 </tr>
                 <tr style="width: 100%;">
                     <td colspan="3" style="padding: 20px;" align="center">
-                        <img src="dist/img/barcode.png">
+                        <img src="<?php echo $codigoBarra ?>" width="670px" height="35px">
                     </td>
                 </tr>
             </table>

@@ -109,10 +109,12 @@ class ProductosController {
         $precioVenta = isset($_POST['precioVenta']) ? $_POST['precioVenta'] : null;
         $precioIVA = isset($_POST['precioIVA']) ? $_POST['precioIVA'] : null;
 
-        $aleatorio = rand(100000000, 999999999);
+        $aleatorio = rand(1111111111111111111, 111111111111111111111);
+        $codigoBarra = 'upload/barcode/barcode_' . $aleatorio . '_110x20.gif';
+        new barCodeGenrator($aleatorio, 1, $codigoBarra, 110, 20, false);
         $codigoBarra = 'upload/barcode/barcode_' . $aleatorio . '.gif';
         $show_codebar = true;
-        new barCodeGenrator($aleatorio, 1, $codigoBarra, 115, 65, $show_codebar);
+        new barCodeGenrator($aleatorio, 1, $codigoBarra, 110, 65, $show_codebar);
 
         $imagenArticulo = null;
         if(is_array($_FILES) && count($_FILES)>0) {

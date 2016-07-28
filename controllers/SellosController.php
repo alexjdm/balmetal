@@ -33,6 +33,8 @@ class SellosController {
     public function selloView() {
         $idSello = isset($_GET['idSello']) ? $_GET['idSello'] : null;
         $sello = $this->modelS->getSello($idSello);
+        $articulo = $this->modelP->getArticulo($sello['ID_ARTICULO']);
+        $codigoBarra = str_replace(".gif", "_110x20.gif",$articulo['CODIGO_BARRA']);
         require_once('views/sellos/selloView.php');
     }
 
