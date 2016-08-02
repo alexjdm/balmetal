@@ -213,7 +213,7 @@ if (!isset($_SESSION)) {
                         $('#messageSellos').html('<div class="alert alert-success" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Listo! </strong>' + data.message + '</div>');
                         $('#saveProveedorEdit').html('<i class="fa fa-check" aria-hidden="true"></i> Listo');
                         $('#modalPrincipal').hide();
-                        window.location.href = "index.php?controller=Sellos&action=sellos";
+                        //window.location.href = "index.php?controller=Sellos&action=sellos";
                         var win = window.open('imprimir.php?sello=' + sello + '&codigo=' + codigo, '_blank');
                         win.focus();
                         //reloadPage();
@@ -305,7 +305,7 @@ if (!isset($_SESSION)) {
             return false;
         });
 
-        $('.newCertificado').click(function(){
+        $("#tablaSellos").on("click", ".newCertificado" ,(function () {
             var id = $(this).closest('tr').data("id"); console.debug(id);
             ajax_loadModal($('#modalPrincipal'),
                 'ajax.php?controller=Sellos&action=newCertificado',
@@ -313,7 +313,7 @@ if (!isset($_SESSION)) {
                 { idSello: id },
                 defaultMessage);
             return false;
-        });
+        }));
 
     });
 </script>

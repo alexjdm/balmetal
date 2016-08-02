@@ -131,7 +131,7 @@
                         </ul>
                     </li>-->
 
-                    <li class="<?php if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?>"><a href="index.php?controller=Certificados&action=informeCertificados"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>
+<!--                    <li class="--><?php //if($controller=='Certificados' && $action=='informeCertificados'){ echo 'active'; } ?><!--"><a href="index.php?controller=Certificados&action=informeCertificados"><i class="fa fa-circle-o"></i> Informe Certificados</a></li>-->
                 </ul>
             </li>
 

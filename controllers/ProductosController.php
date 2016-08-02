@@ -3,8 +3,8 @@
 require_once 'connections/db.php';
 require_once 'helpers/CommonHelper.php';
 require_once 'lib/barcode/barcode.inc.php';
-require_once 'lib/fpdf/fpdf.php';
-require_once 'lib/fpdf/pdf.php';
+//require_once 'lib/fpdf/fpdf.php';
+//require_once 'lib/fpdf/pdf.php';
 //require_once 'lib/dompdf/autoload.inc.php';
 require_once 'models/AutosModel.php';
 require_once 'models/ProductosModel.php';
@@ -108,6 +108,8 @@ class ProductosController {
         $precioInterno = isset($_POST['precioInterno']) ? $_POST['precioInterno'] : null;
         $precioVenta = isset($_POST['precioVenta']) ? $_POST['precioVenta'] : null;
         $precioIVA = isset($_POST['precioIVA']) ? $_POST['precioIVA'] : null;
+
+
 
         $aleatorio = rand(1111111111111111111, 111111111111111111111);
         $codigoBarra = 'upload/barcode/barcode_' . $aleatorio . '_110x20.gif';
