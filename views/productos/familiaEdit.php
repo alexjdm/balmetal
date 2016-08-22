@@ -1,5 +1,5 @@
 <style>
-    .form-group{
+    .modal-body .form-group{
         padding: 15px;
     }
 </style>

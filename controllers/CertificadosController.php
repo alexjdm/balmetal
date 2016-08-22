@@ -40,6 +40,11 @@ class CertificadosController {
         return $this->modelCer->imprimirCertificado($idCertificado);
     }
 
+    public function firstCertificado() {
+        $idCertificado = isset($_GET['idCertificado']) ? $_GET['idCertificado'] : null;
+        return $this->modelCer->firstCertificado($idCertificado);
+    }
+
     public function error() {
         require_once('views/error/error.php');
     }

@@ -79,12 +79,13 @@ class SellosController {
 
     public function createSello() {
         $idArticulo = isset($_GET['idArticulo']) ? $_GET['idArticulo'] : null;
-        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+        /*$idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
         $chasis = isset($_GET['chasis']) ? $_GET['chasis'] : null;
-        $patente = isset($_GET['patente']) ? $_GET['patente'] : null;
+        $patente = isset($_GET['patente']) ? $_GET['patente'] : null;*/
         $cantidad = isset($_GET['cantidad']) ? $_GET['cantidad'] : null;
 
-        return $this->modelP->articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad);
+        //return $this->modelP->articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad);
+        return $this->modelP->articuloAsignarSello($idArticulo, $cantidad);
     }
 
     public function newCertificado() {
@@ -92,7 +93,7 @@ class SellosController {
         $sello = $this->modelS->getSello($idSello);
         $articulo = $this->modelP->getArticulo($sello['ID_ARTICULO']);
         $familia = $this->modelP->getFamilia($articulo['ID_FAMILIA']);
-        $auto = $this->modelA->getAuto($sello['ID_AUTO']);
+        $autos = $this->modelA->getAutosList();
         $clientes = $this->modelC->getClientesList();
 
         require_once('views/sellos/newCertificado.php');
@@ -104,17 +105,24 @@ class SellosController {
         $glosa = isset($_GET['glosa']) ? $_GET['glosa'] : null;
         $obs = isset($_GET['obs']) ? $_GET['obs'] : null;
         $folio = isset($_GET['folio']) ? $_GET['folio'] : null;
+        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+        $chasis = isset($_GET['chasis']) ? $_GET['chasis'] : null;
+        $patente = isset($_GET['patente']) ? $_GET['patente'] : null;
 
         $sello = $this->modelS->getSello($idSello);
         $articulo = $this->modelP->getArticulo($sello['ID_ARTICULO']);
         $familia = $this->modelP->getFamilia($articulo['ID_FAMILIA']);
-        $auto = $this->modelA->getAuto($sello['ID_AUTO']);
+        $auto = $this->modelA->getAuto($idAuto);
 
+        $aleatorio = rand(1111111111111111111, 111111111111111111111);
         //Fields Name position
         $Y_Fields_Name_position = 40;
 
+
+        //******************************** PRIMER CERTIFICADO ******************************
+
         // Creación del objeto de la clase heredada
-        $pdf = new PDF();
+        $pdf = new PDF1();
         $pdf->AliasNbPages();
         $pdf->AddPage();
 
@@ -122,11 +130,6 @@ class SellosController {
         $pdf->SetX(0);
         //Set the interior cell margin to 1cm
         $pdf->cMargin=10;
-
-        /*$pdf->SetFont('Arial','',10);
-        $pdf->Cell(0,5,'Razon Social: Eli-Batt SpA',0,2,'R');
-        $pdf->Cell(0,5,'RUT: 76.499.558-9',0,2,'R');
-        $pdf->Cell(0,5,'Fecha : ' . date("d-m-Y") ,0,2,'R');*/
 
         $pdf->SetFont('Arial','',18);
         $pdf->Cell(0,10,'CERTIFICADO DE ' . strtoupper($articulo['DESCRIPCION']) . ' ' . $sello['SELLO'], 0, 1, 'C');
@@ -212,7 +215,19 @@ class SellosController {
         $pdf->SetFont('Arial','',10);
         $y=$pdf->GetY();
         $pdf->SetXY(10,$y);
-        $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo" . " patente " . $sello['PATENTE'] . " chasis " . $sello['CHASIS'] . "." ,0,'J',false);
+        if($patente != null && $chasis != null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo patente " . $patente . " y chasis " . $chasis . "." ,0,'J',false);
+        }
+        else if($patente == null && $chasis != null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo chasis " . $chasis . "." ,0,'J',false);
+        }
+        else if($patente != null && $chasis == null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo patente " . $patente . "." ,0,'J',false);
+        }
+
 
         $pdf->Ln(1);
         $pdf->SetFont('Arial','BU',10);
@@ -239,16 +254,166 @@ class SellosController {
         $pdf->SetFont('Arial','',8);
         $pdf->Cell(0,5,'Jefe Dpto. Sello de Calidad',0,2,'C');
 
+        $pdf->Ln(4);
         $pdf->SetFont('Arial','',7);
-        $pdf->Cell(0,5,'kp/' . $folio,0,2,'L');
+        $pdf->Cell(30,3,'kp/' . $folio,0,0);
+        $pdf->Cell(100,3,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1);
+
+        $filename = 'Certificado-'. $aleatorio . '-1.pdf';
+        $urlprimer = 'upload/fpdf/' . $filename;
+        $pdf->Output($urlprimer, 'F');
+
+        //******************************** SEGUNDO CERTIFICADO ******************************
+
+
+        // Creación del objeto de la clase heredada
+        $pdf = new PDF();
+        $pdf->AliasNbPages();
+        $pdf->AddPage();
+
+        $pdf->SetY($Y_Fields_Name_position);
+        $pdf->SetX(0);
+        //Set the interior cell margin to 1cm
+        $pdf->cMargin=10;
+
+        /*$pdf->SetFont('Arial','',10);
+        $pdf->Cell(0,5,'Razon Social: Eli-Batt SpA',0,2,'R');
+        $pdf->Cell(0,5,'RUT: 76.499.558-9',0,2,'R');
+        $pdf->Cell(0,5,'Fecha : ' . date("d-m-Y") ,0,2,'R');*/
+
+        $pdf->SetFont('Arial','',18);
+        $pdf->Cell(0,10,'CERTIFICADO DE ' . strtoupper($articulo['DESCRIPCION']) . ' ' . $sello['SELLO'], 0, 1, 'C');
+        $pdf->SetFont('Arial','',16);
+
+        $pdf->Ln(5);
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(95,3,'SOLICITANTE : BALMETAL S.A.',0,0);
+        $pdf->Cell(150,3,'ORDEN DE TRABAJO : 370097 ',0,1);
+        $pdf->Ln(3);
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(95,3,'ATENCION SR. : PEDRO BALTRA C.',0,0);
+        $pdf->Cell(95,3,'FECHA DE EMISION : ' . date("d-m-Y"),0,1);
+        $pdf->Ln(3);
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(95,3,'DIRECCION : JOSE MIGUEL CARRERA SITIO N8 - COLINA - SANTIAGO',0,1);
+
+        $pdf->Ln(3);
+        $pdf->SetFont('Arial','',10);
+        //Print 2 MultiCells
+        $y=$pdf->GetY();
+        $pdf->SetXY(10,$y);
+        $pdf->MultiCell(190,5,"CESMEC S.A. CERTIFICA QUE EL PRODUCTO ". strtoupper($articulo['DESCRIPCION']) . ", CUMPLE CON ESPECIFICACION TECNICA DE DISENO, FABRICACION Y MONTAJE. ESTA BARRA DEBE ESTAR ETIQUETADA CON EL SELLO DE CESMEC CORRESPONDIENTE AL NUMERO DE GOLPE UBICADA EN UNA DE SUS PLACAS BASES Y QUE COINCIDE CON EL DE ESTE DOCUMENTO.",0,'J',false);
+//        $pdf->Ln(10);
+//        $pdf->SetFont('Arial','',10);
+//        $pdf->Cell(95,3,'CESMEC S.A. CERTIFICA QUE EL PRODUCTO BARRA PROTECTORA CONTRA VUELCO EXTERIOR, CUMPLE CON ESPECIFICACION TECNICA DE DISEÑO, FABRICACIÓN Y MONTAJE. ESTA BARRA DEBE ESTAR ETIQUETADA CON EL SELLO DE CESMEC CORRESPONDIENTE AL NUMERO DE GOLPE UBICADA EN UNA DE SUS PLACAS BASES Y QUE COINCIDE CON EL DE ESTE DOCUMENTO.',0,0);
+
+        $pdf->Ln(2);
+        $pdf->SetFont('Arial','BU',10);
+        $pdf->Cell(95,10,'1. ANTECEDENTES',0,1);
+        //Print 2 Cells
+        $pdf->SetFont('Arial','',10);
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,8,'- Producto :',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,8,$glosa,0,'L',false);
+
+        //$pdf->Ln(1);
+        $pdf->SetFont('Arial','BU',10);
+        $pdf->Cell(95,10,'2. PROCEDIMIENTOS',0,1);
+        //Print 2 Cells
+        $pdf->SetFont('Arial','',10);
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'- Inspeccion de fabricacion :',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Efectuada en las instalaciones del fabricante, ubicada en Jose Miguel Carrera sitio N8, Colina, Santiago.',0,'J',false);
+
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'- Controles Efectuados :',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Producto terminado.',0,'L',false);
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Visual (Construccion y recubrimiento).',0,'L',false);
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Control dimensional.',0,'L',false);
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Inspeccion visual de soldadura.',0,'L',false);
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Verificacion documental del acero.',0,'L',false);
+        //Print 2 Cells
+        $y=$pdf->GetY();
+        $pdf->MultiCell(90,5,'',0,'L',false);
+        $pdf->SetXY(70,$y);
+        $pdf->MultiCell(130,5,'Inspeccion de instalacion y sus materiales.',0,'L',false);
+
+        //$pdf->Ln(1);
+        $pdf->SetFont('Arial','BU',10);
+        $pdf->Cell(95,10,'3. RESULTADOS',0,1);
+        //Print 2 MultiCells
+        $pdf->SetFont('Arial','',10);
+        $y=$pdf->GetY();
+        $pdf->SetXY(10,$y);
+        if($patente != null && $chasis != null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo patente " . $patente . " y chasis " . $chasis . "." ,0,'J',false);
+        }
+        else if($patente == null && $chasis != null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo chasis " . $chasis . "." ,0,'J',false);
+        }
+        else if($patente != null && $chasis == null)
+        {
+            $pdf->MultiCell(190,5,"La inspeccion de fabricacion de las barras se realiza previamente en negro y posteriormente con su tratamiento de pintura. Las barras no presentan defectos constructivos y de terminacion. La documentacion se ajusta a lo declarado en memoria de calculo, la inspeccion de instalacion verifica el vehiculo patente " . $patente . "." ,0,'J',false);
+        }
+
+        //$pdf->Ln(1);
+        $pdf->SetFont('Arial','BU',10);
+        $pdf->Cell(95,10,'4. CONCLUSION',0,1);
+        //Print 2 MultiCells
+        $pdf->SetFont('Arial','',10);
+        $y=$pdf->GetY();
+        $pdf->SetXY(10,$y);
+        $pdf->MultiCell(190,5,"DE ACUERDO CON LOS RESULTADOS OBTENIDOS EN LOS CONTROLES EFECTUADOS SE CONCLUYE QUE EL ITEM INSPECCIONADO CUMPLE CON LO ESPECIFICADO.",0,'J',false);
+
+        $pdf->Ln(1);
+        $pdf->SetFont('Arial','BU',10);
+        $pdf->Cell(95,10,'5. El presente certificado se emite para presentar en las faenas que se estimen conveniente.',0,1);
+
+        // Column headings
+        $header = array('TIPO DE BARRA', 'N SELLO CESMEC/BUREAU VERITAS');
+        $data = array($familia['NOMBRE_FAMILIA'], $sello['SELLO']);
+        $pdf->FancyTable($header,$data);
+
+        $pdf->Image('http://www.iongroup.cl/balmetal/dist/img/firmaCertificado.png',92, $pdf->GetY(), 30, 15);
+        $pdf->Ln(15);
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(0,5,'Paola Monsalve C.,',0,2,'C');
+        $pdf->SetFont('Arial','',8);
+        $pdf->Cell(0,5,'Jefe Dpto. Sello de Calidad',0,2,'C');
+
+        $pdf->Ln(4);
+        $pdf->SetFont('Arial','',7);
+        $pdf->Cell(30,3,'kp/' . $folio,0,0);
+        $pdf->Cell(100,3,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1);
 
         //$pdf->Output();
-        $aleatorio = rand(1111111111111111111, 111111111111111111111);
         $filename = 'Certificado-'. $aleatorio . '.pdf';
         $url = 'upload/fpdf/' . $filename;
         $pdf->Output($url,'F');
 
-        return $this->modelS->createNewCertificado($idSello, $idCliente, $glosa, $obs, $folio, $url);
+        return $this->modelS->createNewCertificado($idSello, $idCliente, $idAuto, $patente, $chasis, $glosa, $obs, $folio, $url, $urlprimer);
     }
 
     public function error() {
@@ -263,7 +428,7 @@ class PDF extends FPDF
     function Header()
     {
         // Logo
-        $this->Image('http://www.iongroup.cl/balmetal/dist/img/cesmec.png', 160, 8, 33);
+        //$this->Image('http://www.iongroup.cl/balmetal/dist/img/cesmec.png', 160, 8, 33);
         // Arial bold 15
         //$this->SetFont('Arial','B',10);
         // Movernos a la derecha
@@ -271,7 +436,12 @@ class PDF extends FPDF
         // Título
         //$this->Cell(30,5,'Confirmacion de solicitud de reserva',0,0,'C');
         // Salto de línea
-        $this->Ln(10);
+        //$this->Ln(10);
+
+        /*$pageWidth = 200;
+        $pageHeight = 250;
+        $margin = 10;
+        $this->Rect( $margin, 35, $pageWidth - $margin , $pageHeight - $margin);*/
     }
 
     // Pie de página
@@ -280,8 +450,8 @@ class PDF extends FPDF
         // Posición: a 1,5 cm del final
         $this->SetY(-15);
         $this->SetFont('Arial','I',8);
-        $this->Cell(0,5,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1,'C');
-        $this->Cell(0,5,'SANTIAGO ARICA IQUIQUE ANTOFAGASTA CALAMA COPIAPO TALCAHUANO PTO. MONTT PTA. ARENAS',0,0,'C');
+        //$this->Cell(0,5,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1,'C');
+        //$this->Cell(0,5,'SANTIAGO&nbsp;&nbsp;ARICA&nbsp;&nbsp;IQUIQUE&nbsp;&nbsp;ANTOFAGASTA&nbsp;&nbsp;CALAMA&nbsp;&nbsp;COPIAPO TALCAHUANO PTO. MONTT PTA. ARENAS',0,0,'C');
     }
 
     function Cell($w, $h=0, $txt='', $border=0, $ln=0, $align='', $fill=false, $link='')
@@ -413,4 +583,71 @@ class PDF extends FPDF
     }
 
 }
+
+class PDF1 extends FPDF
+{
+    // Cabecera de página
+    function Header()
+    {
+        // Logo
+        $this->Image('http://www.balmetal.cl/procesadorcodigos/dist/img/cesmec.png', 160, 8, 33);
+        // Arial bold 15
+        $this->SetFont('Arial','B',10);
+        // Movernos a la derecha
+        $this->Cell(80);
+        // Título
+        //$this->Cell(30,5,'Confirmacion de solicitud de reserva',0,0,'C');
+        // Salto de línea
+        //$this->Ln(10);
+
+        $pageWidth = 200;
+        $pageHeight = 250;
+        $margin = 10;
+        $this->Rect( $margin, 35, $pageWidth - $margin , $pageHeight - $margin);
+    }
+
+    // Pie de página
+    function Footer()
+    {
+        // Posición: a 1,5 cm del final
+        $this->SetY(-15);
+        $this->SetFont('Arial','I',8);
+        $this->Cell(0,5,'SANTIAGO ARICA IQUIQUE ANTOFAGASTA CALAMA COPIAPO TALCAHUANO PTO. MONTT PTA. ARENAS',0,0,'C');
+    }
+
+    // Colored table
+    function FancyTable($header, $data)
+    {
+        $this->SetX(45);
+        // Colors, line width and bold font
+        $this->SetFillColor(224,224,224);
+        $this->SetTextColor(0);
+        $this->SetDrawColor(224,224,224);
+        $this->SetLineWidth(.3);
+        $this->SetFont('','B');
+        // Header
+        $w = array(40, 75);
+        for($i=0;$i<count($header);$i++)
+            $this->Cell($w[$i],7,$header[$i],1,0,'C',true);
+        $this->Ln();
+        $this->SetX(45);
+        // Color and font restoration
+        $this->SetFillColor(224,235,255);
+        $this->SetTextColor(0);
+        $this->SetFont('');
+        // Data
+        $i = 0;
+        foreach($data as $row)
+        {
+            $this->Cell($w[$i],6,$row,'LR',0,'C',false);
+            $i++;
+        }
+        $this->Ln();
+        // Closing line
+        $this->Cell(array_sum($w),0,'','C');
+    }
+
+}
+
+
 ?>

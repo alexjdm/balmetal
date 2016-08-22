@@ -345,7 +345,8 @@ class ProductosModel
         Database::disconnect();
     }
 
-    public function articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad){
+    //public function articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad){
+    public function articuloAsignarSello($idArticulo, $cantidad){
 
         if (!defined("PHP_EOL")) define("PHP_EOL", "\r\n");
 
@@ -373,8 +374,10 @@ class ProductosModel
         $exito = true;
         while($i < $cantidad){
             $sello = substr($year, 1, 1) . ($cuenta+$i+1) . $articulo['CODIGO_ARTICULO'];
-            $sql = $pdo->prepare("INSERT INTO `sello`(`SELLO`, `ID_ARTICULO`, `ID_AUTO`, `CHASIS`, `PATENTE`, `HABILITADO`) VALUES (:SELLO, :ID_ARTICULO, :ID_AUTO, :CHASIS, :PATENTE, '1')");
-            $sql->execute(array('SELLO' => $sello, 'ID_ARTICULO' => $idArticulo, 'ID_AUTO' => $idAuto, 'CHASIS' => $chasis, 'PATENTE' => $patente));
+            /*$sql = $pdo->prepare("INSERT INTO `sello`(`SELLO`, `ID_ARTICULO`, `ID_AUTO`, `CHASIS`, `PATENTE`, `HABILITADO`) VALUES (:SELLO, :ID_ARTICULO, :ID_AUTO, :CHASIS, :PATENTE, '1')");
+            $sql->execute(array('SELLO' => $sello, 'ID_ARTICULO' => $idArticulo, 'ID_AUTO' => $idAuto, 'CHASIS' => $chasis, 'PATENTE' => $patente));*/
+            $sql = $pdo->prepare("INSERT INTO `sello`(`SELLO`, `ID_ARTICULO`, `HABILITADO`) VALUES (:SELLO, :ID_ARTICULO, '1')");
+            $sql->execute(array('SELLO' => $sello, 'ID_ARTICULO' => $idArticulo));
             $id = $pdo->lastInsertId();
 
             if(empty($id)) {

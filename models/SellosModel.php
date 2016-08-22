@@ -7,7 +7,7 @@ class SellosModel
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM sello WHERE HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM sello WHERE HABILITADO='1' ORDER BY ID_SELLO DESC");
         $sql->execute();
 
         return $sql->fetchAll();
@@ -109,14 +109,14 @@ class SellosModel
         Database::disconnect();
     }
 
-    public function createNewCertificado ($idSello, $idCliente, $glosa, $obs, $folio, $url){
+    public function createNewCertificado ($idSello, $idCliente, $idAuto, $patente, $chasis, $glosa, $obs, $folio, $url, $urlprimer){
         if (!defined("PHP_EOL")) define("PHP_EOL", "\r\n");
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("INSERT INTO `certificado`(`ID_SELLO`, `ID_CLIENTE`, `GLOSA`, `OBSERVACIONES`, `FOLIO`, `URL_CERTIFICADO`, `HABILITADO`) VALUES (:ID_SELLO,:ID_CLIENTE,:GLOSA,:OBSERVACIONES,:FOLIO,:URL_CERTIFICADO,'1')");
-        $sql->execute(array('ID_SELLO' => $idSello, 'ID_CLIENTE' => $idCliente, 'GLOSA' => trim($glosa), 'OBSERVACIONES' => $obs, 'FOLIO' => $folio, 'URL_CERTIFICADO' => $url));
+        $sql = $pdo->prepare("INSERT INTO `certificado`(`ID_SELLO`, `ID_CLIENTE`, `ID_AUTO`, `PATENTE`, `CHASIS`, `GLOSA`, `OBSERVACIONES`, `FOLIO`, `URL_CERTIFICADO`, `URL_PRIMER_CERTIFICADO`, `HABILITADO`) VALUES (:ID_SELLO,:ID_CLIENTE,:ID_AUTO,:PATENTE,:CHASIS,:GLOSA,:OBSERVACIONES,:FOLIO,:URL_CERTIFICADO,:URL_PRIMER_CERTIFICADO,'1')");
+        $sql->execute(array('ID_SELLO' => $idSello, 'ID_CLIENTE' => $idCliente, 'ID_AUTO' => $idAuto, 'PATENTE' => trim($patente), 'CHASIS' => trim($chasis), 'GLOSA' => trim($glosa), 'OBSERVACIONES' => $obs, 'FOLIO' => $folio, 'URL_CERTIFICADO' => $url, 'URL_PRIMER_CERTIFICADO' => $urlprimer));
         $id = $pdo->lastInsertId();
 
         if(!empty($id)) {

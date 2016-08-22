@@ -49,7 +49,7 @@ $controllers = array(
         'asignarSelloArticulo', 'articuloAsignarSello', 'deleteArticulo', 'getArticulos', 'error'],
     'Certificados' => ['certificados', 'imprimirCertificado', 'deleteCertificado', 'error'],
     'Sellos' => ['sellos', 'sellosEdit', 'editSellos', 'deleteSellos', 'selloView', 'imprimirSello', 'versionImprimir',
-        'newSello', 'createSello', 'newCertificado', 'createCertificado',
+        'newSello', 'createSello', 'newCertificado', 'firstCertificado', 'createCertificado',
         'error'],
     'Mantenimiento' => ['impuestos', 'createNewImpuesto', 'impuestoEdit', 'editImpuesto', 'deleteImpuesto',
         'bancos', 'createNewBanco', 'bancoEdit', 'editBanco', 'deleteBanco',

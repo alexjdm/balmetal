@@ -54,9 +54,9 @@ if (!isset($_SESSION)) {
                                 <th>Codigo</th>
                                 <th>Familia</th>
                                 <th>Artículo</th>
-                                <th>Automóvil</th>
+                                <!--<th>Automóvil</th>
                                 <th>Chasis</th>
-                                <th>Patente</th>
+                                <th>Patente</th>-->
                                 <th>Imprimir</th>
                                 <th>Certificado</th>
                                 <th>Opciones</th>
@@ -114,7 +114,7 @@ if (!isset($_SESSION)) {
                                     endforeach;
                                     ?>
                                 </td>
-                                <td>
+                                <!--<td>
                                     <?php
                                     foreach($autos as $auto):
                                         if($auto['ID_AUTO'] == $sello['ID_AUTO'])
@@ -125,8 +125,8 @@ if (!isset($_SESSION)) {
                                     endforeach;
                                     ?>
                                 </td>
-                                <td><?php echo $sello['CHASIS'] ?></td>
-                                <td><?php echo $sello['PATENTE'] ?></td>
+                                <td><?php /*echo $sello['CHASIS'] */?></td>
+                                <td><?php /*echo $sello['PATENTE'] */?></td>-->
                                 <td>
                                     <center>
                                         <?php echo $sello['IMPRIMIR'] ?>
@@ -141,6 +141,10 @@ if (!isset($_SESSION)) {
                                         <button data-original-title="Edit Row" class="btn btn-xs btn-default newCertificado">
                                             <i class="fa fa-certificate"></i>
                                         </button>
+                                        <!--&nbsp
+                                        <button data-original-title="Edit Row" class="btn btn-xs btn-default newCertificado2">
+                                            <i class="fa fa-circle"></i>
+                                        </button>-->
                                     </center>
                                 </td>
                                 <td>
@@ -169,9 +173,9 @@ if (!isset($_SESSION)) {
                                 <th>Codigo</th>
                                 <th>Familia</th>
                                 <th>Artículo</th>
-                                <th>Automóvil</th>
+                                <!--<th>Automóvil</th>
                                 <th>Chasis</th>
-                                <th>Patente</th>
+                                <th>Patente</th>-->
                                 <th>Imprimir</th>
                                 <th>Certificado</th>
                                 <th>Opciones</th>

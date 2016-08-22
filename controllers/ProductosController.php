@@ -188,12 +188,13 @@ class ProductosController {
 
     public function articuloAsignarSello() {
         $idArticulo = isset($_GET['idArticulo']) ? $_GET['idArticulo'] : null;
-        $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
+        /*$idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
         $chasis = isset($_GET['chasis']) ? $_GET['chasis'] : null;
-        $patente = isset($_GET['patente']) ? $_GET['patente'] : null;
+        $patente = isset($_GET['patente']) ? $_GET['patente'] : null;*/
         $cantidad = isset($_GET['cantidad']) ? $_GET['cantidad'] : null;
 
-        return $this->modelP->articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad);
+        //return $this->modelP->articuloAsignarSello($idArticulo, $idAuto, $chasis, $patente, $cantidad);
+        return $this->modelP->articuloAsignarSello($idArticulo, $cantidad);
     }
 
     public function deleteArticulo() {

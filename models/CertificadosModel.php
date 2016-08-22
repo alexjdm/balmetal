@@ -12,7 +12,7 @@ class CertificadosModel
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM certificado WHERE HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM certificado WHERE HABILITADO='1' ORDER BY ID_CERTIFICADO DESC");
         $sql->execute();
 
         return $sql->fetchAll();

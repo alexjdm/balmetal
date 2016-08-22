@@ -31,10 +31,32 @@
                     <?php echo utf8_encode($articulo['DESCRIPCION']) ?>
                 </div>
             </div>
+            <!--<div class="form-group">
+                <label class="col-sm-3 control-label" for="auto">Automóvil</label>
+                <div class="col-sm-9">
+                    <?php /*echo utf8_encode($auto['MARCA_AUTO'] . " - " . $auto['MODELO_AUTO']) */?>
+                </div>
+            </div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="auto">Automóvil</label>
                 <div class="col-sm-9">
-                    <?php echo utf8_encode($auto['MARCA_AUTO'] . " - " . $auto['MODELO_AUTO']) ?>
+                    <select id="auto" name="auto" class="form-control">
+                        <?php foreach($autos as $auto): ?>
+                            <option id="<?php echo $auto['ID_AUTO'] ?>"><?php echo utf8_encode($auto['MARCA_AUTO']) . " - " . utf8_encode($auto['MODELO_AUTO']) ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="chasis">Chasis</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="chasis" type="text" placeholder="Ingrese el número de chasis">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="patente">Patente</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="patente" type="text" placeholder="Ingrese la patente">
                 </div>
             </div>
             <div class="form-group">
@@ -87,8 +109,11 @@
         var glosa = $("#glosa").val();
         var obs = $("#obs").val();
         var folio = $("#folio").val();
+        var idAuto = $("#auto").children(":selected").attr("id");
+        var chasis = $("#chasis").val();
+        var patente = $("#patente").val();
 
-        if(idSello == '' || idCliente == '' || glosa == '' || obs == '' || folio == '')
+        if(idSello == '' || idCliente == '' || glosa == '' || obs == '' || folio == '' || chasis == '')
         {
             $('#messageNewCertificado').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar todos los campos</div>');
         }
@@ -97,7 +122,8 @@
             $.ajax({
                 type: 'GET',
                 url: e,
-                data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio },
+                //data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio },
+                data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio, idAuto:idAuto, chasis: chasis, patente: patente },
                 dataType : "json",
                 beforeSend: function () {
                     $('#saveCertificadoNew').html("Cargando...");
@@ -110,7 +136,7 @@
                         $('#messageNewCertificado').html('<div class="alert alert-success" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Listo! </strong>' + data.message + '</div>');
                         $('#saveCertificadoNew').html('<i class="fa fa-check" aria-hidden="true"></i> Listo');
                         $('#modalPrincipal').hide();
-                        window.location.href = "index.php?controller=Sellos&action=sellos";
+                        window.location.href = "index.php?controller=Certificados&action=certificados";
                     }
                     else {
                         $('#saveCertificadoNew').html("Generar");

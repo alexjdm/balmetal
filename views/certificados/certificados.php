@@ -42,7 +42,7 @@ if (!isset($_SESSION)) {
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Lista de Certificados</h3>
-                    <button class="btn btn-primary" id="newCertificadoBtn" style="float:right;" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo</button>
+                    <!--<button class="btn btn-primary" id="newCertificadoBtn" style="float:right;" disabled><i class="fa fa-plus-circle" aria-hidden="true"></i> Nuevo</button>-->
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
@@ -63,7 +63,7 @@ if (!isset($_SESSION)) {
                         <tbody>
                         <?php $n = 1; ?>
                         <?php foreach ($certificados as $certificado): ?>
-                            <tr data-id="<?php echo $certificado['ID_CERTIFICADO'] ?>" data-certificado="<?php echo $certificado['URL_CERTIFICADO'] ?>">
+                            <tr data-id="<?php echo $certificado['ID_CERTIFICADO'] ?>" data-certificado="<?php echo $certificado['URL_CERTIFICADO'] ?>" data-primercertificado="<?php echo $certificado['URL_PRIMER_CERTIFICADO'] ?>">
                                 <td><?php echo $n ?></td>
                                 <td>
                                     <?php
@@ -89,7 +89,13 @@ if (!isset($_SESSION)) {
                                 </td>
                                 <td>
                                     <?php
-                                    foreach($sellos as $sello):
+                                    foreach($autos as $auto):
+                                        if($certificado['ID_AUTO'] == $auto['ID_AUTO']){
+                                            echo $auto['MARCA_AUTO'] . " - " . $auto['MODELO_AUTO'];
+                                            break;
+                                        }
+                                    endforeach;
+                                    /*foreach($sellos as $sello):
                                         if($certificado['ID_SELLO'] == $sello['ID_SELLO']){
                                             foreach($autos as $auto):
                                                 if($sello['ID_AUTO'] == $auto['ID_AUTO']){
@@ -98,7 +104,7 @@ if (!isset($_SESSION)) {
                                                 }
                                             endforeach;
                                         }
-                                    endforeach;
+                                    endforeach;*/
                                     ?>
                                 </td>
                                 <td><?php echo $certificado['GLOSA'] ?></td>
@@ -115,6 +121,10 @@ if (!isset($_SESSION)) {
                                 </td>
                                 <td>
                                     <center>
+                                        <button data-original-title="First Cert" class="btn btn-xs btn-default firstCertificado">
+                                            <i class="fa fa-certificate"></i>
+                                        </button>
+                                        &nbsp
                                         <button data-original-title="Delete" class="btn btn-xs btn-default deleteCertificado">
                                             <i class="fa fa-times"></i>
                                         </button>
@@ -249,6 +259,18 @@ if (!isset($_SESSION)) {
                 defaultMessage);
             return false;
         });
+
+        $("#tablaCertificados").on("click", ".firstCertificado", (function() {
+
+            var id = $(this).closest('tr').data("id");
+            var primercertificado = $(this).closest('tr').data("primercertificado");
+
+            var win = window.open(primercertificado, '_blank');
+            win.focus();
+
+            return false;
+        }));
+
 
     });
 </script>

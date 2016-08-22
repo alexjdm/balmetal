@@ -2,8 +2,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <base href="http://localhost/balmetal/" />
-    <!--<base href="http://www.iongroup.cl/balmetal/" />-->
+    <base href="http://www.balmetal.cl/procesadorcodigos/" />
 
     <title>BalMetal</title>
     <link rel="shortcut icon" href="dist/img/favicon.png">

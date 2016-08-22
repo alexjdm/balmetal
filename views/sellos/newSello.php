@@ -34,13 +34,13 @@
                     </select>
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label class="col-sm-3 control-label" for="auto">Automóvil</label>
                 <div class="col-sm-9">
                     <select id="auto" name="auto" class="form-control">
-                        <?php foreach($autos as $auto): ?>
-                            <option id="<?php echo $auto['ID_AUTO'] ?>"><?php echo $auto['MARCA_AUTO'] . " - " . $auto['MODELO_AUTO'] ?></option>
-                        <?php endforeach; ?>
+                        <?php /*foreach($autos as $auto): */?>
+                            <option id="<?php /*echo $auto['ID_AUTO'] */?>"><?php /*echo $auto['MARCA_AUTO'] . " - " . $auto['MODELO_AUTO'] */?></option>
+                        <?php /*endforeach; */?>
                     </select>
                 </div>
             </div>
@@ -55,7 +55,7 @@
                 <div class="col-sm-9">
                     <input class="form-control" id="patente" type="text" placeholder="Ingrese la patente">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="cantidad">Cantidad</label>
                 <div class="col-sm-9">
@@ -96,12 +96,12 @@
     $('#saveSelloNew').click(function(){
         var e = 'ajax.php?controller=Sellos&action=createSello'; console.debug(e);
         var idArticulo = $("#articulo").children(":selected").attr("id");
-        var idAuto = $("#auto").children(":selected").attr("id");
+        /*var idAuto = $("#auto").children(":selected").attr("id");
         var chasis = $("#chasis").val();
-        var patente = $("#patente").val();
+        var patente = $("#patente").val();*/
         var cantidad = $("#cantidad").val();
 
-        if(idArticulo == '' || cantidad == '' || chasis == '' || patente == '')
+        if(idArticulo == '' || cantidad == ''/* || chasis == '' || patente == ''*/)
         {
             $('#messageNewSello').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar todos los campos</div>');
         }
@@ -110,7 +110,8 @@
             $.ajax({
                 type: 'GET',
                 url: e,
-                data: { idArticulo: idArticulo, idAuto: idAuto, chasis: chasis, patente: patente, cantidad: cantidad },
+                //data: { idArticulo: idArticulo, idAuto: idAuto, chasis: chasis, patente: patente, cantidad: cantidad },
+                data: { idArticulo: idArticulo, cantidad: cantidad },
                 dataType : "json",
                 beforeSend: function () {
                     $('#saveSelloNew').html("Cargando...");

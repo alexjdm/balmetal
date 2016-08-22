@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="codigo">Código</label>
                 <div class="col-sm-9">
-                    <input class="form-control" id="codigo" type="text" value="<?php echo $articulo['CODIGO'] ?>">
+                    <input class="form-control" id="codigo" type="text" value="<?php echo $articulo['CODIGO_ARTICULO'] ?>">
                 </div>
             </div>
             <div class="form-group">
