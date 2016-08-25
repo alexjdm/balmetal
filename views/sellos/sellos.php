@@ -131,14 +131,14 @@ if (!isset($_SESSION)) {
                                     <center>
                                         <?php echo $sello['IMPRIMIR'] ?>
                                         &nbsp
-                                        <button data-original-title="View Row" class="btn btn-xs btn-default printSello">
+                                        <button title="Imprimir" class="btn btn-xs btn-default printSello">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
                                     </center>
                                 </td>
                                 <td>
                                     <center>
-                                        <button data-original-title="Edit Row" class="btn btn-xs btn-default newCertificado">
+                                        <button title="Nuevo Certificado" class="btn btn-xs btn-default newCertificado">
                                             <i class="fa fa-certificate"></i>
                                         </button>
                                         <!--&nbsp
@@ -149,7 +149,7 @@ if (!isset($_SESSION)) {
                                 </td>
                                 <td>
                                     <center>
-                                        <button data-original-title="View Row" class="btn btn-xs btn-default viewSello">
+                                        <button title="Ver Sello" class="btn btn-xs btn-default viewSello">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </center>

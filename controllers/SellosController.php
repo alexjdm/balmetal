@@ -8,11 +8,13 @@ require_once 'models/AutosModel.php';
 require_once 'models/ClientesModel.php';
 require_once 'models/SellosModel.php';
 require_once 'models/ProductosModel.php';
+require_once 'models/CertificadosModel.php';
 
 class SellosController {
 
     public $modelA;
     public $modelC;
+    public $modelCer;
     public $modelS;
     public $modelP;
 
@@ -22,6 +24,7 @@ class SellosController {
         $this-> modelC = new ClientesModel();
         $this-> modelS = new SellosModel();
         $this-> modelP = new ProductosModel();
+        $this-> modelCer = new CertificadosModel();
     }
 
     public function sellos(){
@@ -102,9 +105,9 @@ class SellosController {
     public function createCertificado() {
         $idSello = isset($_GET['idSello']) ? $_GET['idSello'] : null;
         $idCliente = isset($_GET['idCliente']) ? $_GET['idCliente'] : null;
-        $glosa = isset($_GET['glosa']) ? $_GET['glosa'] : null;
+        /*$glosa = isset($_GET['glosa']) ? $_GET['glosa'] : null;*/
         $obs = isset($_GET['obs']) ? $_GET['obs'] : null;
-        $folio = isset($_GET['folio']) ? $_GET['folio'] : null;
+        /*$folio = isset($_GET['folio']) ? $_GET['folio'] : null;*/
         $idAuto = isset($_GET['idAuto']) ? $_GET['idAuto'] : null;
         $chasis = isset($_GET['chasis']) ? $_GET['chasis'] : null;
         $patente = isset($_GET['patente']) ? $_GET['patente'] : null;
@@ -114,7 +117,11 @@ class SellosController {
         $familia = $this->modelP->getFamilia($articulo['ID_FAMILIA']);
         $auto = $this->modelA->getAuto($idAuto);
 
-        $aleatorio = rand(1111111111111111111, 111111111111111111111);
+        $folio = $this->modelCer->getLastFolio();
+        if($folio[0] == 0)
+            $folio = 50000;
+        $folio = $folio[0] + 1;
+        //$aleatorio = rand(1111111111111111111, 111111111111111111111);
         //Fields Name position
         $Y_Fields_Name_position = 40;
 
@@ -165,7 +172,8 @@ class SellosController {
         $y=$pdf->GetY();
         $pdf->MultiCell(90,8,'- Producto :',0,'L',false);
         $pdf->SetXY(70,$y);
-        $pdf->MultiCell(130,8,$glosa,0,'L',false);
+        //$pdf->MultiCell(130,8,$glosa,0,'L',false);
+        $pdf->MultiCell(130,8,$familia['GLOSA_FAMILIA'],0,'L',false);
 
         $pdf->Ln(1);
         $pdf->SetFont('Arial','BU',10);
@@ -247,7 +255,7 @@ class SellosController {
         $data = array($familia['NOMBRE_FAMILIA'], $sello['SELLO']);
         $pdf->FancyTable($header,$data);
 
-        $pdf->Image('http://www.iongroup.cl/balmetal/dist/img/firmaCertificado.png',92, $pdf->GetY(), 30, 15);
+        $pdf->Image('http://www.balmetal.cl/procesadorcodigos/dist/img/firmaCertificado.png',92, $pdf->GetY(), 30, 15);
         $pdf->Ln(15);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(0,5,'Paola Monsalve C.,',0,2,'C');
@@ -259,7 +267,7 @@ class SellosController {
         $pdf->Cell(30,3,'kp/' . $folio,0,0);
         $pdf->Cell(100,3,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1);
 
-        $filename = 'Certificado-'. $aleatorio . '-1.pdf';
+        $filename = 'Certificado-'. $folio . '-1.pdf';
         $urlprimer = 'upload/fpdf/' . $filename;
         $pdf->Output($urlprimer, 'F');
 
@@ -315,7 +323,8 @@ class SellosController {
         $y=$pdf->GetY();
         $pdf->MultiCell(90,8,'- Producto :',0,'L',false);
         $pdf->SetXY(70,$y);
-        $pdf->MultiCell(130,8,$glosa,0,'L',false);
+        //$pdf->MultiCell(130,8,$glosa,0,'L',false);
+        $pdf->MultiCell(130,8,$familia['GLOSA_FAMILIA'],0,'L',false);
 
         //$pdf->Ln(1);
         $pdf->SetFont('Arial','BU',10);
@@ -396,7 +405,7 @@ class SellosController {
         $data = array($familia['NOMBRE_FAMILIA'], $sello['SELLO']);
         $pdf->FancyTable($header,$data);
 
-        $pdf->Image('http://www.iongroup.cl/balmetal/dist/img/firmaCertificado.png',92, $pdf->GetY(), 30, 15);
+        $pdf->Image('http://www.balmetal.cl/procesadorcodigos/dist/img/firmaCertificado.png',92, $pdf->GetY(), 30, 15);
         $pdf->Ln(15);
         $pdf->SetFont('Arial','B',10);
         $pdf->Cell(0,5,'Paola Monsalve C.,',0,2,'C');
@@ -409,11 +418,11 @@ class SellosController {
         $pdf->Cell(100,3,'ESTE INFORME TIENE UNA VALIDEZ DE CINCO ANOS A CONTAR DE SU FECHA DE EMISION',0,1);
 
         //$pdf->Output();
-        $filename = 'Certificado-'. $aleatorio . '.pdf';
+        $filename = 'Certificado-'. $folio . '.pdf';
         $url = 'upload/fpdf/' . $filename;
         $pdf->Output($url,'F');
 
-        return $this->modelS->createNewCertificado($idSello, $idCliente, $idAuto, $patente, $chasis, $glosa, $obs, $folio, $url, $urlprimer);
+        return $this->modelS->createNewCertificado($idSello, $idCliente, $idAuto, $patente, $chasis, /*$glosa,*/ $obs, $folio, $url, $urlprimer);
     }
 
     public function error() {
@@ -428,7 +437,7 @@ class PDF extends FPDF
     function Header()
     {
         // Logo
-        //$this->Image('http://www.iongroup.cl/balmetal/dist/img/cesmec.png', 160, 8, 33);
+        //$this->Image('http://www.balmetal.cl/procesadorcodigos/dist/img/cesmec.png', 160, 8, 33);
         // Arial bold 15
         //$this->SetFont('Arial','B',10);
         // Movernos a la derecha

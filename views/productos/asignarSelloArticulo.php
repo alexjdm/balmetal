@@ -22,9 +22,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="familia">Familia</label>
                 <div class="col-sm-9">
-                    <?php foreach($familias as $familia): ?>
-                        <?php echo $familia['NOMBRE_FAMILIA'] ?>
-                    <?php endforeach; ?>
+                    <?php
+                    foreach($familias as $familia):
+                        if($familia['ID_FAMILIA'] == $articulo['ID_FAMILIA'])
+                            echo $familia['NOMBRE_FAMILIA'];
+                    endforeach;
+                    ?>
                 </div>
             </div>
             <div class="form-group">

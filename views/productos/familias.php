@@ -57,6 +57,12 @@ if (!isset($_SESSION)) {
                                     <input class="form-control" id="nombre" type="text" placeholder="Nombre">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-12" for="nombre">Glosa</label>
+                                <div class="col-sm-12">
+                                    <input class="form-control" id="glosa" type="text" placeholder="Glosa">
+                                </div>
+                            </div>
 
                             <div id="messageNewFamilia" style="margin: 20px;"></div>
 
@@ -84,6 +90,7 @@ if (!isset($_SESSION)) {
                             <th>N°</th>
                             <th>Código</th>
                             <th>Nombre</th>
+                            <th>Glosa</th>
                             <th>Opciones</th>
                         </tr>
                         </thead>
@@ -94,6 +101,7 @@ if (!isset($_SESSION)) {
                                 <th><?php echo $n ?></th>
                                 <td><?php echo $familia['CODIGO_FAMILIA'] ?></td>
                                 <td><?php echo $familia['NOMBRE_FAMILIA'] ?></td>
+                                <td><?php echo $familia['GLOSA_FAMILIA'] ?></td>
                                 <td>
                                     <button data-original-title="Edit Row" class="btn btn-xs btn-default editFamilia">
                                         <i class="fa fa-pencil"></i>
@@ -112,6 +120,7 @@ if (!isset($_SESSION)) {
                             <th>N°</th>
                             <th>Código</th>
                             <th>Nombre</th>
+                            <th>Glosa</th>
                             <th>Opciones</th>
                         </tr>
                         </tfoot>
@@ -175,8 +184,9 @@ if (!isset($_SESSION)) {
             var e = 'ajax.php?controller=Productos&action=createNewFamilia'; console.debug(e);
             var codigo = $("#codigo").val(); console.debug(codigo);
             var nombre = $("#nombre").val(); console.debug(nombre);
+            var glosa = $("#glosa").val(); console.debug(glosa);
 
-            if(nombre == '' || codigo == '')
+            if(nombre == '' || codigo == '' || glosa == '')
             {
                 $('#messageNewFamilia').html('<div class="alert alert-danger" role="alert"><strong>Error! </strong> Debes llenar todos los campos.</div>');
             }
@@ -185,7 +195,7 @@ if (!isset($_SESSION)) {
                 $.ajax({
                     type: 'GET',
                     url: e,
-                    data: { codigo: codigo, nombre: nombre},
+                    data: { codigo: codigo, nombre: nombre, glosa: glosa },
                     dataType : "json",
                     beforeSend: function () {
                         $('#newFamiliaBtn').html("Cargando...");

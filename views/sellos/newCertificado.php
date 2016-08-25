@@ -38,7 +38,7 @@
                 </div>
             </div>-->
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="auto">Automóvil</label>
+                <label class="col-sm-3 control-label" for="auto">Automóvil *</label>
                 <div class="col-sm-9">
                     <select id="auto" name="auto" class="form-control">
                         <?php foreach($autos as $auto): ?>
@@ -48,7 +48,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="chasis">Chasis</label>
+                <label class="col-sm-3 control-label" for="chasis">Chasis *</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="chasis" type="text" placeholder="Ingrese el número de chasis">
                 </div>
@@ -59,26 +59,26 @@
                     <input class="form-control" id="patente" type="text" placeholder="Ingrese la patente">
                 </div>
             </div>
-            <div class="form-group">
+            <!--<div class="form-group">
                 <label class="col-sm-3 control-label" for="glosa">Glosa</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="glosa" type="text" placeholder="Ingrese la glosa del producto">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
                 <label class="col-sm-3 control-label" for="obs">Observaciones</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="obs" type="text" placeholder="Ingrese sus observaciones">
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label" for="folio">Folio</label>
+            <!--<div class="form-group">
+                <label class="col-sm-3 control-label" for="folio">Folio *</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="folio" type="text" placeholder="Ingrese el número de folio">
                 </div>
-            </div>
+            </div>-->
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="cliente">Cliente</label>
+                <label class="col-sm-3 control-label" for="cliente">Cliente *</label>
                 <div class="col-sm-9">
                     <select id="cliente" name="cliente" class="form-control">
                         <?php foreach($clientes as $cliente): ?>
@@ -106,16 +106,16 @@
 
         var idSello = $("#idSello").val();
         var idCliente = $("#cliente").children(":selected").attr("id");
-        var glosa = $("#glosa").val();
+        /*var glosa = $("#glosa").val();*/
         var obs = $("#obs").val();
-        var folio = $("#folio").val();
+        /*var folio = $("#folio").val();*/
         var idAuto = $("#auto").children(":selected").attr("id");
         var chasis = $("#chasis").val();
         var patente = $("#patente").val();
 
-        if(idSello == '' || idCliente == '' || glosa == '' || obs == '' || folio == '' || chasis == '')
+        if(idSello == '' || idCliente == '' || idAuto == '' || chasis == '')
         {
-            $('#messageNewCertificado').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar todos los campos</div>');
+            $('#messageNewCertificado').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar todos los campos requeridos.</div>');
         }
         else
         {
@@ -123,7 +123,9 @@
                 type: 'GET',
                 url: e,
                 //data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio },
-                data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio, idAuto:idAuto, chasis: chasis, patente: patente },
+                //data: { idSello: idSello, idCliente: idCliente, glosa: glosa, obs: obs, folio: folio, idAuto:idAuto, chasis: chasis, patente: patente },
+                //data: { idSello: idSello, idCliente: idCliente, obs: obs, folio: folio, idAuto:idAuto, chasis: chasis, patente: patente },
+                data: { idSello: idSello, idCliente: idCliente, obs: obs, idAuto:idAuto, chasis: chasis, patente: patente },
                 dataType : "json",
                 beforeSend: function () {
                     $('#saveCertificadoNew').html("Cargando...");

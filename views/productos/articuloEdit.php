@@ -14,7 +14,7 @@
             <input id="idArticulo" value="<?php echo $articulo['ID_ARTICULO'] ?>" type="hidden">
 
             <div class="form-group">
-                <label class="col-sm-3 control-label" for="codigo">Código</label>
+                <label class="col-sm-3 control-label" for="codigo">Código de Golpe</label>
                 <div class="col-sm-9">
                     <input class="form-control" id="codigo" type="text" value="<?php echo $articulo['CODIGO_ARTICULO'] ?>">
                 </div>
@@ -24,7 +24,7 @@
                 <div class="col-sm-9">
                     <select id="familia" name="familia" class="form-control">
                         <?php foreach($familias as $familia): ?>
-                            <option id="<?php echo $familia['ID_FAMILIA'] ?>"><?php echo $familia['NOMBRE_FAMILIA'] ?></option>
+                            <option id="<?php echo $familia['ID_FAMILIA'] ?>" <?php if($familia['ID_FAMILIA'] == $articulo['ID_FAMILIA']){ echo "selected"; } ?>><?php echo $familia['NOMBRE_FAMILIA'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="col-sm-9">
                     <select id="impuesto" name="impuesto" class="form-control">
                         <?php foreach($impuestos as $impuesto): ?>
-                            <option id="<?php echo $impuesto['ID_IMPUESTO'] ?>"><?php echo $impuesto['VALOR_IMPUESTO'] . " %" ?></option>
+                            <option id="<?php echo $impuesto['ID_IMPUESTO'] ?>" <?php if($impuesto['ID_IMPUESTO'] == $articulo['ID_IMPUESTO']){ echo "selected"; } ?> ><?php echo $impuesto['VALOR_IMPUESTO'] . " %" ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -51,7 +51,7 @@
                     <select id="proveedor1" name="proveedor1" class="form-control">
                         <option id="0">Ninguno</option>
                         <?php foreach($proveedores as $proveedor): ?>
-                            <option id="<?php echo $proveedor['ID_PROVEEDOR'] ?>"><?php echo $proveedor['NOMBRE'] ?></option>
+                            <option id="<?php echo $proveedor['ID_PROVEEDOR'] ?>" <?php if($proveedor['ID_PROVEEDOR'] == $articulo['ID_PROVEEDOR1']){ echo "selected"; } ?> ><?php echo $proveedor['NOMBRE'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -62,7 +62,7 @@
                     <select id="proveedor2" name="proveedor2" class="form-control">
                         <option id="0">Ninguno</option>
                         <?php foreach($proveedores as $proveedor): ?>
-                            <option id="<?php echo $proveedor['ID_PROVEEDOR'] ?>"><?php echo $proveedor['NOMBRE'] ?></option>
+                            <option id="<?php echo $proveedor['ID_PROVEEDOR'] ?>" <?php if($proveedor['ID_PROVEEDOR'] == $articulo['ID_PROVEEDOR2']){ echo "selected"; } ?> ><?php echo $proveedor['NOMBRE'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -79,7 +79,7 @@
                     <select id="ubicacion" name="ubicacion" class="form-control">
                         <option id="0">Ninguno</option>
                         <?php foreach($ubicaciones as $ubicacion): ?>
-                            <option id="<?php echo $ubicacion['ID_UBICACION'] ?>"><?php echo $ubicacion['NOMBRE_UBICACION'] ?></option>
+                            <option id="<?php echo $ubicacion['ID_UBICACION'] ?>" <?php if($ubicacion['ID_UBICACION'] == $articulo['ID_UBICACION']){ echo "selected"; } ?> ><?php echo $ubicacion['NOMBRE_UBICACION'] ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -134,7 +134,7 @@
         var e = 'ajax.php?controller=Productos&action=editArticulo'; console.debug(e);
         var idArticulo = $("#idArticulo").val(); console.debug(idArticulo);
         var codigo = $("#codigo").val(); console.debug(codigo);
-        var idArticulo = $("#familia").val(); console.debug(idArticulo);
+        var idFamilia = $("#familia").val(); console.debug(idFamilia);
         var descripcion = $("#descripcion").val(); console.debug(descripcion);
         var idImpuesto = $("#impuesto").val(); console.debug(idImpuesto);
         var proveedor1 = $("#proveedor1").val(); console.debug(proveedor1);

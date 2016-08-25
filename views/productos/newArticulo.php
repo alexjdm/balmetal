@@ -16,7 +16,7 @@
             <div class="modal-body" style="max-height: 479px; overflow-y: auto;">
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label" for="codigo">Código</label>
+                    <label class="col-sm-3 control-label" for="codigo">Código de Golpe</label>
                     <div class="col-sm-9">
                         <input class="form-control" id="codigo" type="text">
                     </div>

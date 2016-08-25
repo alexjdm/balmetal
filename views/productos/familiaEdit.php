@@ -25,6 +25,13 @@
                     <input class="form-control" id="nombre" type="text" value="<?php echo $familia['NOMBRE_FAMILIA'] ?>">
                 </div>
             </div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label" for="glosa">Glosa</label>
+                <div class="col-sm-9">
+                    <input class="form-control" id="glosa" type="text" value="<?php echo $familia['GLOSA_FAMILIA'] ?>">
+                </div>
+            </div>
+
             <br>
             <div id="messageEditFamilia"></div>
         </div>
@@ -32,7 +39,6 @@
         <div class="modal-footer">
             <button type="button" id="cerrarPrincipal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             <button id="saveFamiliaEdit" type="button" class="btn btn-primary">Guardar</button>
-
         </div>
     </div>
 </div>
@@ -44,8 +50,9 @@
         var idFamilia = $("#idFamilia").val(); console.debug(idFamilia);
         var codigo = $("#codigo").val(); console.debug(codigo);
         var nombre = $("#nombre").val(); console.debug(nombre);
+        var glosa = $("#glosa").val(); console.debug(glosa);
 
-        if(nombre == '' || codigo == '')
+        if(nombre == '' || codigo == '' || glosa == '')
         {
             $('#messageNewFamilia').html('<div class="alert alert-danger" role="alert"><strong>Error! </strong> Debes llenar todos los campos.</div>');
         }
@@ -54,7 +61,7 @@
             $.ajax({
                 type: 'GET',
                 url: e,
-                data: { idFamilia: idFamilia, codigo: codigo, nombre: nombre },
+                data: { idFamilia: idFamilia, codigo: codigo, nombre: nombre, glosa: glosa },
                 dataType : "json",
                 beforeSend: function () {
                     $('#saveFamiliaEdit').html("Cargando...");

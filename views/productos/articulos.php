@@ -50,9 +50,10 @@ if (!isset($_SESSION)) {
                         <thead>
                         <tr>
                             <th>N°</th>
-                            <th>Código</th>
+                            <th>Código de Golpe</th>
                             <th>Descripción</th>
                             <th>Familia</th>
+                            <th>Código de Producto</th>
                             <th>Precio Venta</th>
                             <th>Stock</th>
                             <th>Opciones</th>
@@ -76,22 +77,23 @@ if (!isset($_SESSION)) {
                                         endforeach;
                                     ?>
                                 </td>
+                                <td><?php echo $articulo['CODIGO_PRODUCTO'] ?></td>
                                 <td><?php echo $articulo['PRECIO_VENTA'] ?></td>
                                 <td><?php echo $articulo['STOCK'] ?></td>
                                 <td>
-                                    <button data-original-title="Edit Row" class="btn btn-xs btn-default codigoArticulo">
+                                    <button title="Código de Artículo" class="btn btn-xs btn-default codigoArticulo">
                                         <i class="fa fa-barcode" aria-hidden="true"></i>
                                     </button>
                                     &nbsp
-                                    <button data-original-title="Delete" class="btn btn-xs btn-default asignarSello">
+                                    <button title="Asignar Sello" class="btn btn-xs btn-default asignarSello">
                                         <i class="fa fa-certificate" aria-hidden="true"></i>
                                     </button>
                                     &nbsp
-                                    <button data-original-title="Edit Row" class="btn btn-xs btn-default editArticulo">
+                                    <button title="Editar Artículo" class="btn btn-xs btn-default editArticulo">
                                         <i class="fa fa-pencil"></i>
                                     </button>
                                     &nbsp
-                                    <button data-original-title="Delete" class="btn btn-xs btn-default deleteArticulo">
+                                    <button title="Eliminar" class="btn btn-xs btn-default deleteArticulo">
                                         <i class="fa fa-times"></i>
                                     </button>
                                 </td>
@@ -102,9 +104,10 @@ if (!isset($_SESSION)) {
                         <tfoot>
                         <tr>
                             <th>N°</th>
-                            <th>Código</th>
+                            <th>Código de Golpe</th>
                             <th>Descripción</th>
                             <th>Familia</th>
+                            <th>Código de Producto</th>
                             <th>Precio Venta</th>
                             <th>Stock</th>
                             <th>Opciones</th>

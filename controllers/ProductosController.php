@@ -40,8 +40,9 @@ class ProductosController {
     public function createNewFamilia() {
         $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
         $nombre = isset($_GET['nombre']) ? $_GET['nombre'] : null;
+        $glosa = isset($_GET['glosa']) ? $_GET['glosa'] : null;
 
-        return $this->modelP->newFamilia($codigo, $nombre);
+        return $this->modelP->newFamilia($codigo, $nombre, $glosa);
     }
 
     public function familiaEdit() {
@@ -55,8 +56,9 @@ class ProductosController {
         $idFamilia = isset($_GET['idFamilia']) ? $_GET['idFamilia'] : null;
         $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
         $nombre = isset($_GET['nombre']) ? $_GET['nombre'] : null;
+        $glosa = isset($_GET['glosa']) ? $_GET['glosa'] : null;
 
-        return $this->modelP->editFamilia($idFamilia, $codigo, $nombre);
+        return $this->modelP->editFamilia($idFamilia, $codigo, $nombre, $glosa);
     }
 
     public function deleteFamilia() {
@@ -89,13 +91,13 @@ class ProductosController {
         $proveedor1 = isset($_POST['proveedor1']) ? $_POST['proveedor1'] : null;
         $proveedor2 = isset($_POST['proveedor2']) ? $_POST['proveedor2'] : null;
         $descripcionCorta = isset($_POST['descripcionCorta']) ? $_POST['descripcionCorta'] : null;
-        $ubicacion = isset($_POST['ubicacion']) ? $_POST['ubicacion'] : null;
+        $idUbicacion = isset($_POST['ubicacion']) ? $_POST['ubicacion'] : null;
         $stock = isset($_POST['stock']) ? $_POST['stock'] : null;
         $stockMin = isset($_POST['stockMin']) ? $_POST['stockMin'] : null;
         $avisoStockMin = isset($_POST['avisoStockMin']) ? $_POST['avisoStockMin'] : null;
         $datosProducto = isset($_POST['datosProducto']) ? $_POST['datosProducto'] : null;
         $fechaAlta = isset($_POST['fechaAlta']) ? $_POST['fechaAlta'] : null;
-        if(isset($_GET['fecha'])){
+        if($fechaAlta != ''){
             list($dia, $mes, $año) = split('[/.-]', $fechaAlta);
             $fechaAlta = $año . "-" . $mes . "-" . $dia;
         }
@@ -111,12 +113,12 @@ class ProductosController {
 
 
 
-        $aleatorio = rand(1111111111111111111, 111111111111111111111);
-        $codigoBarra = 'upload/barcode/barcode_' . $aleatorio . '_110x20.gif';
-        new barCodeGenrator($aleatorio, 1, $codigoBarra, 110, 20, false);
-        $codigoBarra = 'upload/barcode/barcode_' . $aleatorio . '.gif';
+        $codigoProducto = rand(1111111111111111111, 111111111111111111111);
+        $codigoBarra = 'upload/barcode/barcode_' . $codigoProducto . '_110x20.gif';
+        new barCodeGenrator($codigoProducto, 1, $codigoBarra, 110, 20, false);
+        $codigoBarra = 'upload/barcode/barcode_' . $codigoProducto . '.gif';
         $show_codebar = true;
-        new barCodeGenrator($aleatorio, 1, $codigoBarra, 110, 65, $show_codebar);
+        new barCodeGenrator($codigoProducto, 1, $codigoBarra, 110, 65, $show_codebar);
 
         $imagenArticulo = null;
         if(is_array($_FILES) && count($_FILES)>0) {
@@ -128,9 +130,9 @@ class ProductosController {
 
                 if(move_uploaded_file($sourcePath, $dirpath . '/' . $targetPath)) {
                     return $this->modelP->newArticulo($codigo, $idFamilia, $descripcion, $idImpuesto, $proveedor1, $proveedor2,
-                        $descripcionCorta, $ubicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
+                        $descripcionCorta, $idUbicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
                         $unidadesPorCaja, $preguntarPrecioTicket, $editarDescripcionTicket, $observaciones, $precioCompra,
-                        $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $imagenArticulo);
+                        $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $codigoProducto, $imagenArticulo);
                 }
                 else {
                     $data = array(
@@ -143,9 +145,9 @@ class ProductosController {
         }
         else {
             return $this->modelP->newArticulo($codigo, $idFamilia, $descripcion, $idImpuesto, $proveedor1, $proveedor2,
-                $descripcionCorta, $ubicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
+                $descripcionCorta, $idUbicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
                 $unidadesPorCaja, $preguntarPrecioTicket, $editarDescripcionTicket, $observaciones, $precioCompra,
-                $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $imagenArticulo);
+                $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $codigoProducto, $imagenArticulo);
         }
     }
 
@@ -160,6 +162,10 @@ class ProductosController {
     public function articuloEdit() {
         $idArticulo = isset($_GET['idArticulo']) ? $_GET['idArticulo'] : null;
         $articulo = $this->modelP->getArticulo($idArticulo);
+        $familias = $this->modelP->getFamiliasList();
+        $impuestos = $this->modelI->getImpuestosList();
+        $proveedores = $this->modelPr->getProveedoresList();
+        $ubicaciones = $this->modelU->getUbicacionesList();
         require_once('views/productos/articuloEdit.php');
     }
 

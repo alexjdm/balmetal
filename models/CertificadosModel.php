@@ -85,4 +85,14 @@ class CertificadosModel
         Database::disconnect();
     }
 
+    public function getLastFolio(){
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $sql = $pdo->prepare("SELECT FOLIO FROM certificado ORDER BY FOLIO DESC");
+        $sql->execute();
+
+        return $sql->fetchAll()[0];
+    }
+
 }

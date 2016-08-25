@@ -53,7 +53,7 @@ if (!isset($_SESSION)) {
                                 <th>Sello</th>
                                 <th>Cliente</th>
                                 <th>Automóvil</th>
-                                <th>Glosa</th>
+                                <!--<th>Glosa</th>-->
                                 <th>Observaciones</th>
                                 <th>Folio</th>
                                 <th>Imprimir</th>
@@ -63,7 +63,7 @@ if (!isset($_SESSION)) {
                         <tbody>
                         <?php $n = 1; ?>
                         <?php foreach ($certificados as $certificado): ?>
-                            <tr data-id="<?php echo $certificado['ID_CERTIFICADO'] ?>" data-certificado="<?php echo $certificado['URL_CERTIFICADO'] ?>" data-primercertificado="<?php echo $certificado['URL_PRIMER_CERTIFICADO'] ?>">
+                            <tr data-id="<?php echo $certificado['ID_CERTIFICADO'] ?>" data-certificado="<?php echo $certificado['URL_PRIMER_CERTIFICADO'] ?>" data-primercertificado="<?php echo $certificado['URL_CERTIFICADO'] ?>">
                                 <td><?php echo $n ?></td>
                                 <td>
                                     <?php
@@ -107,25 +107,25 @@ if (!isset($_SESSION)) {
                                     endforeach;*/
                                     ?>
                                 </td>
-                                <td><?php echo $certificado['GLOSA'] ?></td>
+                                <!--<td><?php /*echo $certificado['GLOSA'] */?></td>-->
                                 <td><?php echo $certificado['OBSERVACIONES'] ?></td>
                                 <td><?php echo $certificado['FOLIO'] ?></td>
                                 <td>
                                     <center>
                                         <?php echo $certificado['IMPRIMIR'] ?>
                                         &nbsp
-                                        <button data-original-title="View Row" class="btn btn-xs btn-default printCertificado">
+                                        <button title="Imprimir Certificado" class="btn btn-xs btn-default printCertificado">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
                                     </center>
                                 </td>
                                 <td>
                                     <center>
-                                        <button data-original-title="First Cert" class="btn btn-xs btn-default firstCertificado">
+                                        <button title="Primer Certificado" class="btn btn-xs btn-default firstCertificado">
                                             <i class="fa fa-certificate"></i>
                                         </button>
                                         &nbsp
-                                        <button data-original-title="Delete" class="btn btn-xs btn-default deleteCertificado">
+                                        <button title="Eliminar" class="btn btn-xs btn-default deleteCertificado">
                                             <i class="fa fa-times"></i>
                                         </button>
                                     </center>
@@ -152,7 +152,7 @@ if (!isset($_SESSION)) {
                                 <th>Sello</th>
                                 <th>Cliente</th>
                                 <th>Automóvil</th>
-                                <th>Glosa</th>
+                                <!--<th>Glosa</th>-->
                                 <th>Observaciones</th>
                                 <th>Folio</th>
                                 <th>Imprimir</th>

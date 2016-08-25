@@ -24,13 +24,13 @@ class ProductosModel
         return $sql->fetchAll()[0];
     }
 
-    public function editFamilia($idFamilia, $codigo, $nombre){
+    public function editFamilia($idFamilia, $codigo, $nombre, $glosa){
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("UPDATE familia set NOMBRE_FAMILIA =:NOMBRE_FAMILIA, CODIGO_FAMILIA =:CODIGO_FAMILIA WHERE ID_FAMILIA=:ID_FAMILIA");
+        $sql = $pdo->prepare("UPDATE familia set NOMBRE_FAMILIA =:NOMBRE_FAMILIA, CODIGO_FAMILIA =:CODIGO_FAMILIA, GLOSA_FAMILIA =:GLOSA_FAMILIA WHERE ID_FAMILIA=:ID_FAMILIA");
 
-        if ($sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo), 'ID_FAMILIA' => $idFamilia ))) {
+        if ($sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo), 'GLOSA_FAMILIA' => trim($glosa), 'ID_FAMILIA' => $idFamilia ))) {
             $status  = "success";
             $message = "Los datos han sido actualizados.";
         }
@@ -76,15 +76,15 @@ class ProductosModel
         Database::disconnect();
     }
 
-    public function newFamilia($codigo, $nombre){
+    public function newFamilia($codigo, $nombre, $glosa){
 
         if (!defined("PHP_EOL")) define("PHP_EOL", "\r\n");
 
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("INSERT INTO `familia`(`NOMBRE_FAMILIA`, `CODIGO_FAMILIA`, `HABILITADO`) VALUES (:NOMBRE_FAMILIA, :CODIGO_FAMILIA, '1')");
-        $sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo)));
+        $sql = $pdo->prepare("INSERT INTO `familia`(`NOMBRE_FAMILIA`, `CODIGO_FAMILIA`, `GLOSA_FAMILIA`, `HABILITADO`) VALUES (:NOMBRE_FAMILIA, :CODIGO_FAMILIA, :GLOSA_FAMILIA, '1')");
+        $sql->execute(array('NOMBRE_FAMILIA' => trim($nombre), 'CODIGO_FAMILIA' => trim($codigo), 'GLOSA_FAMILIA' => trim($glosa)));
         $id = $pdo->lastInsertId();
 
         if(!empty($id)) {
@@ -112,7 +112,7 @@ class ProductosModel
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM articulo WHERE HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM articulo WHERE HABILITADO='1' ORDER BY ID_ARTICULO DESC");
         $sql->execute();
 
         return $sql->fetchAll();
@@ -132,7 +132,7 @@ class ProductosModel
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("SELECT * FROM articulo WHERE ID_FAMILIA = '$idFamilia' AND HABILITADO='1'");
+        $sql = $pdo->prepare("SELECT * FROM articulo WHERE ID_FAMILIA = '$idFamilia' AND HABILITADO='1' ORDER BY ID_ARTICULO DESC");
         $sql->execute();
 
         return $sql->fetchAll();
@@ -191,9 +191,9 @@ class ProductosModel
     }
 
     public function newArticulo($codigo, $idFamilia, $descripcion, $idImpuesto, $proveedor1, $proveedor2,
-                                $descripcionCorta, $ubicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
+                                $descripcionCorta, $idUbicacion, $stock, $stockMin, $avisoStockMin, $datosProducto, $fechaAlta, $embalaje,
                                 $unidadesPorCaja, $preguntarPrecioTicket, $editarDescripcionTicket, $observaciones, $precioCompra,
-                                $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $imagenArticulo){
+                                $precioInterno, $precioVenta, $precioIVA, $codigoBarra, $codigoProducto, $imagenArticulo){
 
         $fechaAlta = $fechaAlta != '' ? $fechaAlta : null;
         $stock = $stock != '' ? $stock : null;
@@ -210,16 +210,16 @@ class ProductosModel
         $pdo = Database::connect();
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        $sql = $pdo->prepare("INSERT INTO `articulo`(`CODIGO_ARTICULO`, `ID_FAMILIA`, `DESCRIPCION`, `ID_IMPUESTO`, `ID_PROVEEDOR1`, `ID_PROVEEDOR2`, `DESCRIPCION_CORTA`, `UBICACION`, `STOCK`, `STOCK_MINIMO`, `AVISO_MINIMO`, `DATOS_ARTICULO`, `FECHA_ALTA`, `EMBALAJE`, `UNIDADES_POR_CAJA`, `PREGUNTAR_PRECIO_TICKET`, `MODIFICAR_DESCRIPCION_TICKET`, `OBSERVACIONES`, `PRECIO_COMPRA`, `PRECIO_INTERNO`, `PRECIO_VENTA`, `PRECIO_IVA`, `IMAGEN_ARTICULO`, `CODIGO_BARRA`, `HABILITADO`)
-          VALUES (:CODIGO_ARTICULO, :ID_FAMILIA, :DESCRIPCION, :ID_IMPUESTO, :ID_PROVEEDOR1, :ID_PROVEEDOR2, :DESCRIPCION_CORTA, :UBICACION, :STOCK, :STOCK_MINIMO, :AVISO_MINIMO, :DATOS_ARTICULO, :FECHA_ALTA, :EMBALAJE, :UNIDADES_POR_CAJA, :PREGUNTAR_PRECIO_TICKET, :MODIFICAR_DESCRIPCION_TICKET, :OBSERVACIONES, :PRECIO_COMPRA, :PRECIO_INTERNO, :PRECIO_VENTA, :PRECIO_IVA, :IMAGEN_ARTICULO, :CODIGO_BARRA, '1')");
+        $sql = $pdo->prepare("INSERT INTO `articulo`(`CODIGO_ARTICULO`, `ID_FAMILIA`, `DESCRIPCION`, `ID_IMPUESTO`, `ID_PROVEEDOR1`, `ID_PROVEEDOR2`, `DESCRIPCION_CORTA`, `ID_UBICACION`, `STOCK`, `STOCK_MINIMO`, `AVISO_MINIMO`, `DATOS_ARTICULO`, `FECHA_ALTA`, `EMBALAJE`, `UNIDADES_POR_CAJA`, `PREGUNTAR_PRECIO_TICKET`, `MODIFICAR_DESCRIPCION_TICKET`, `OBSERVACIONES`, `PRECIO_COMPRA`, `PRECIO_INTERNO`, `PRECIO_VENTA`, `PRECIO_IVA`, `IMAGEN_ARTICULO`, `CODIGO_BARRA`, `CODIGO_PRODUCTO`, `HABILITADO`)
+          VALUES (:CODIGO_ARTICULO, :ID_FAMILIA, :DESCRIPCION, :ID_IMPUESTO, :ID_PROVEEDOR1, :ID_PROVEEDOR2, :DESCRIPCION_CORTA, :ID_UBICACION, :STOCK, :STOCK_MINIMO, :AVISO_MINIMO, :DATOS_ARTICULO, :FECHA_ALTA, :EMBALAJE, :UNIDADES_POR_CAJA, :PREGUNTAR_PRECIO_TICKET, :MODIFICAR_DESCRIPCION_TICKET, :OBSERVACIONES, :PRECIO_COMPRA, :PRECIO_INTERNO, :PRECIO_VENTA, :PRECIO_IVA, :IMAGEN_ARTICULO, :CODIGO_BARRA, :CODIGO_PRODUCTO, '1')");
 
         $sql->execute(array('CODIGO_ARTICULO' => trim($codigo), 'ID_FAMILIA' => $idFamilia, 'DESCRIPCION' => $descripcion,
             'ID_IMPUESTO' => $idImpuesto, 'ID_PROVEEDOR1' => $proveedor1, 'ID_PROVEEDOR2' => $proveedor2,
-            'DESCRIPCION_CORTA' => trim($descripcionCorta), 'UBICACION' => $ubicacion, 'STOCK' => $stock, 'STOCK_MINIMO' => $stockMin,
+            'DESCRIPCION_CORTA' => trim($descripcionCorta), 'ID_UBICACION' => $idUbicacion, 'STOCK' => $stock, 'STOCK_MINIMO' => $stockMin,
             'AVISO_MINIMO' => $avisoStockMin, 'DATOS_ARTICULO' => $datosProducto, 'FECHA_ALTA' => $fechaAlta, 'EMBALAJE' => $embalaje,
             'UNIDADES_POR_CAJA' => $unidadesPorCaja, 'PREGUNTAR_PRECIO_TICKET' => $preguntarPrecioTicket, 'MODIFICAR_DESCRIPCION_TICKET' => $editarDescripcionTicket,
             'OBSERVACIONES' => $observaciones,'PRECIO_COMPRA' => $precioCompra, 'PRECIO_INTERNO' => $precioInterno, 'PRECIO_VENTA' => $precioVenta,
-            'PRECIO_IVA' => $precioIVA, 'IMAGEN_ARTICULO' => $imagenArticulo, 'CODIGO_BARRA' => $codigoBarra));
+            'PRECIO_IVA' => $precioIVA, 'IMAGEN_ARTICULO' => $imagenArticulo, 'CODIGO_BARRA' => $codigoBarra, 'CODIGO_PRODUCTO' => $codigoProducto));
         $id = $pdo->lastInsertId();
 
         if(!empty($id)) {
