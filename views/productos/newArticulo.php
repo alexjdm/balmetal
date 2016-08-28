@@ -22,6 +22,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label" for="codigoProducto">Código de Producto</label>
+                    <div class="col-sm-9">
+                        <input class="form-control" id="codigoProducto" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-sm-3 control-label" for="familia">Familia</label>
                     <div class="col-sm-9">
                         <select id="familia" name="familia" class="form-control">
@@ -227,6 +233,7 @@
 
         var formData = new FormData();
         formData.append('codigo', $('#codigo').val());
+        formData.append('codigoProducto', $('#codigoProducto').val());
         formData.append('idFamilia', $("#familia").children(":selected").attr("id"));
         formData.append('descripcion', $('#descripcion').val());
         formData.append('idImpuesto', $("#idImpuesto").children(":selected").attr("id"));
@@ -250,9 +257,9 @@
         formData.append('precioIVA', $('#precioIVA').val());
         formData.append('imagenArticulo', $('#imagenArticulo')[0].files[0]);
 
-        if($('#codigo').val() == '' || $('#descripcion').val() == '')
+        if($('#codigo').val() == '' || $('#codigoProducto').val() == '' || $('#descripcion').val() == '')
         {
-            $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar al menos el código y la descripción.</div>');
+            $('#messageNewArticulo').html('<div class="alert alert-danger" role="alert" style="text-align: left!important;margin: 0!important;padding: 5px!important;"><strong>Error! </strong> Debes llenar al menos los códigos y la descripción.</div>');
         }
         else
         {

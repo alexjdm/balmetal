@@ -85,6 +85,7 @@ class ProductosController {
 
     public function createNewArticulo() {
         $codigo = isset($_POST['codigo']) ? $_POST['codigo'] : null;
+        $codigoProducto = isset($_POST['codigoProducto']) ? $_POST['codigoProducto'] : null;
         $idFamilia = isset($_POST['idFamilia']) ? $_POST['idFamilia'] : null;
         $descripcion = isset($_POST['descripcion']) ? $_POST['descripcion'] : null;
         $idImpuesto = isset($_POST['idImpuesto']) ? $_POST['idImpuesto'] : null;
@@ -113,12 +114,12 @@ class ProductosController {
 
 
 
-        $codigoProducto = rand(1111111111111111111, 111111111111111111111);
-        $codigoBarra = 'upload/barcode/barcode_' . $codigoProducto . '_110x20.gif';
-        new barCodeGenrator($codigoProducto, 1, $codigoBarra, 110, 20, false);
-        $codigoBarra = 'upload/barcode/barcode_' . $codigoProducto . '.gif';
+        $codeBar = rand(1111111111111111111, 111111111111111111111);
+        $codigoBarra = 'upload/barcode/barcode_' . $codeBar . '_110x20.gif';
+        new barCodeGenrator($codeBar, 1, $codigoBarra, 110, 20, false);
+        $codigoBarra = 'upload/barcode/barcode_' . $codeBar . '.gif';
         $show_codebar = true;
-        new barCodeGenrator($codigoProducto, 1, $codigoBarra, 110, 65, $show_codebar);
+        new barCodeGenrator($codeBar, 1, $codigoBarra, 110, 65, $show_codebar);
 
         $imagenArticulo = null;
         if(is_array($_FILES) && count($_FILES)>0) {
