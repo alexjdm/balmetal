@@ -119,7 +119,7 @@ class SellosController {
 
         $folio = $this->modelCer->getLastFolio();
         if($folio[0] == 0)
-            $folio = 50000;
+            $folio = 35000;
         $folio = $folio[0] + 1;
         //$aleatorio = rand(1111111111111111111, 111111111111111111111);
         //Fields Name position
